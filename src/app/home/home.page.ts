@@ -1,17 +1,23 @@
 import { Component } from '@angular/core';
-import {IonHeader, IonToolbar, IonTitle, IonContent, IonButton, IonFooter, IonButtons} from '@ionic/angular/standalone';
-import {NgOptimizedImage} from "@angular/common";
+import {
+  IonHeader, IonToolbar, IonTitle, IonContent, IonButton, IonFooter,
+  IonButtons, IonCardHeader, IonCardTitle, IonGrid, IonRow, IonCol,
+  IonCard, IonCardSubtitle, IonCardContent, IonIcon
+} from '@ionic/angular/standalone';
+import { NgOptimizedImage } from '@angular/common';
+import {FooterComponent} from "../footer/footer.component";
+import {ContenidoPPComponent} from "../contenido-pp/contenido-pp.component";
 
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
-  imports: [IonHeader, IonToolbar, IonTitle, IonContent, IonButton, IonFooter, IonButtons, NgOptimizedImage],
+  imports: [
+    IonHeader, IonToolbar, IonTitle, IonContent, IonButton, IonFooter,
+    IonButtons, NgOptimizedImage, IonCardHeader, IonCardTitle, IonGrid,
+    IonRow, IonCol, IonCard, IonCardSubtitle, IonCardContent, IonIcon, FooterComponent, ContenidoPPComponent
+  ],
 })
 export class HomePage {
-  constructor() {
 
-
-
-  }
 }

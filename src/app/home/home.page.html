@@ -1,55 +1,30 @@
-<ion-header>
-  <ion-toolbar>
-    <div class="header-container">
+<ion-header [translucent]="true">
 
-      <!-- Botón notificaciones -->
-      <ion-button fill="clear" class="icon-btn">
-        <img src="assets/icon/notifications-outline.svg" alt="notificaciones" fill/>
-      </ion-button>
+  <div class="header-container">
 
-      <!-- Barra de búsqueda -->
+    <!-- Botón notificaciones -->
+    <ion-button fill="clear" class="icon-btn">
+      <img src="assets/icon/notifications-outline.svg" alt="notificaciones" fill/>
+    </ion-button>
 
-      <div class="search-container">
-        <input type="text" placeholder="Buscar recetas" />
-        <img src="assets/icon/search-outline.svg" alt="buscar" class="search-icon" />
-      </div>
+    <!-- Barra de búsqueda -->
 
-
-
-      <!-- Botón ajustes -->
-      <ion-button fill="clear" class="icon-btn">
-        <img src="assets/icon/settings-outline.svg" alt="configuración" fill/>
-      </ion-button>
+    <div class="search-container">
+      <input type="text" placeholder="Buscar recetas" />
+      <img src="assets/icon/search-outline.svg" alt="buscar" class="search-icon" />
     </div>
-  </ion-toolbar>
+
+
+    <!-- Botón ajustes -->
+    <ion-button fill="clear" class="icon-btn">
+      <img src="assets/icon/settings-outline.svg" alt="configuración" fill/>
+    </ion-button>
+  </div>
+
 </ion-header>
 
 
+<ion-content><app-contenido-pp></app-contenido-pp></ion-content>
 
 
-
-
-
-
-
-<ion-footer>
-  <ion-toolbar class="footer-icons">
-    <div class="footer-buttons">
-      <ion-button fill="clear">
-        <img ngSrc="assets/icon/home-outline.svg" alt="Home" height="16" width="16">
-      </ion-button>
-      <ion-button fill="clear">
-        <img ngSrc="assets/icon/heart-outline.svg" alt="Heart" height="16" width="16">
-      </ion-button>
-      <ion-button fill="clear">
-        <img ngSrc="assets/icon/bookmark-outline.svg" alt="Saves" height="16" width="16">
-      </ion-button>
-      <ion-button fill="clear">
-        <img ngSrc="assets/icon/time-outline.svg" alt="History" height="16" width="16">
-      </ion-button>
-      <ion-button fill="clear">
-        <img ngSrc="assets/icon/person-outline.svg" alt="User" height="16" width="16">
-      </ion-button>
-    </div>
-  </ion-toolbar>
-</ion-footer>
+<app-footer></app-footer>
