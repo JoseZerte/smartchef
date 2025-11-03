@@ -16,7 +16,7 @@
 
 
     <!-- Alambre de puerco -->
-    <ion-card class="mini-card">
+    <ion-card class="mini-card" (click)="nav.navigateWithAnimation('/receta-detalle', $event)">
       <div class="card-image-wrapper">
         <img alt="Alambre de puerco" src="assets/recetas/alambre de puerco.png" />
         <button class="like-btn" (click)="toggleLikeItem(items[1])">
@@ -120,3 +120,5 @@
     </ion-card>
   </div>
 </ion-content>
+
+

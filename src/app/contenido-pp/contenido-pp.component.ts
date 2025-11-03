@@ -2,17 +2,19 @@ import { Component, OnInit, inject } from '@angular/core';
 import {IonCard, IonCardHeader, IonCardTitle, IonContent} from "@ionic/angular/standalone";
 import { Router } from "@angular/router";
 import {navigate} from "ionicons/icons";
+import { Navigation } from '../services/navigation';
+
 @Component({
     selector: 'app-contenido-pp',
     templateUrl: './contenido-pp.component.html',
     styleUrls: ['./contenido-pp.component.scss'],
     standalone: true,
-    imports: [
-        IonCard,
-        IonCardHeader,
-        IonCardTitle,
-        IonContent
-    ]
+  imports: [
+    IonCard,
+    IonCardHeader,
+    IonCardTitle,
+    IonContent,
+  ]
 })
 export class ContenidoPPComponent  implements OnInit {
 
@@ -31,7 +33,9 @@ export class ContenidoPPComponent  implements OnInit {
 
   private router = inject(Router);
 
-  constructor() { }
+
+
+  public nav = inject(Navigation);
 
   // Alterna el liked usando el índice (para tu HTML actual con items[i])
   toggleLike(index: number) {
