@@ -13,9 +13,7 @@ import {ContenidoPPComponent} from "../contenido-pp/contenido-pp.component";
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
   imports: [
-    IonHeader, IonToolbar, IonTitle, IonContent, IonButton, IonFooter,
-    IonButtons, NgOptimizedImage, IonCardHeader, IonCardTitle, IonGrid,
-    IonRow, IonCol, IonCard, IonCardSubtitle, IonCardContent, IonIcon, FooterComponent, ContenidoPPComponent
+    IonHeader, IonContent, IonButton, FooterComponent, ContenidoPPComponent
   ],
 })
 export class HomePage {

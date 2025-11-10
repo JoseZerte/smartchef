@@ -2,7 +2,7 @@
   <div class="cards-wrapper">
 
     <!-- Albóndigas de carne -->
-    <ion-card class="mini-card" (click)="navigateWithAnimation('/receta-detalle', $event)">
+    <ion-card class="mini-card" (click)="nav.navigateWithAnimation('/receta-detalle/' + 0, $event)">
       <div class="card-image-wrapper">
         <img alt="Albóndigas de carne" src="assets/recetas/albondigas de carne.png" />
         <button class="like-btn" (click)="toggleLikeItem(items[0]); $event.stopPropagation();">
@@ -16,7 +16,7 @@
 
 
     <!-- Alambre de puerco -->
-    <ion-card class="mini-card" (click)="nav.navigateWithAnimation('/receta-detalle', $event)">
+    <ion-card class="mini-card" (click)="nav.navigateWithAnimation('/receta-detalle/' + 1, $event)">
       <div class="card-image-wrapper">
         <img alt="Alambre de puerco" src="assets/recetas/alambre de puerco.png" />
         <button class="like-btn" (click)="toggleLikeItem(items[1])">
@@ -29,7 +29,7 @@
     </ion-card>
 
     <!-- Adobito Sevillano -->
-    <ion-card class="mini-card">
+    <ion-card class="mini-card" (click)="nav.navigateWithAnimation('/receta-detalle/' + 2, $event)">
       <div class="card-image-wrapper">
         <img alt="Adobito Sevillano" src="assets/recetas/adobito%20sevillano.png" />
         <button class="like-btn" (click)="toggleLikeItem(items[2])">
@@ -42,7 +42,7 @@
     </ion-card>
 
     <!-- Ceviche de corvina -->
-    <ion-card class="mini-card">
+    <ion-card class="mini-card" (click)="nav.navigateWithAnimation('/receta-detalle/' + 3, $event)">
       <div class="card-image-wrapper">
         <img alt="Ceviche de corvina" src="assets/recetas/ceviche de corvina.png" />
         <button class="like-btn" (click)="toggleLikeItem(items[3])">
@@ -55,7 +55,7 @@
     </ion-card>
 
     <!-- Fabada Gallega -->
-    <ion-card class="mini-card">
+    <ion-card class="mini-card" (click)="nav.navigateWithAnimation('/receta-detalle/' + 4, $event)">
       <div class="card-image-wrapper">
         <img alt="Fabada Gallega" src="assets/recetas/fabada gallega.png" />
         <button class="like-btn" (click)="toggleLikeItem(items[4])">
@@ -68,7 +68,7 @@
     </ion-card>
 
     <!-- Galletas de avena -->
-    <ion-card class="mini-card">
+    <ion-card class="mini-card" (click)="nav.navigateWithAnimation('/receta-detalle/' + 5, $event)">
       <div class="card-image-wrapper">
         <img alt="Galletas de avena" src="assets/recetas/galletas de avena.png" />
         <button class="like-btn" (click)="toggleLikeItem(items[5])">
@@ -81,7 +81,7 @@
     </ion-card>
 
     <!-- Panqueques -->
-    <ion-card class="mini-card">
+    <ion-card class="mini-card" (click)="nav.navigateWithAnimation('/receta-detalle/' + 6, $event)">
       <div class="card-image-wrapper">
         <img alt="Panqueques" src="assets/recetas/panqueques.png" />
         <button class="like-btn" (click)="toggleLikeItem(items[6])">
@@ -94,7 +94,7 @@
     </ion-card>
 
     <!-- Salchipapa -->
-    <ion-card class="mini-card">
+    <ion-card class="mini-card" (click)="nav.navigateWithAnimation('/receta-detalle/' + 7, $event)">
       <div class="card-image-wrapper">
         <img alt="Salchipapa" src="assets/recetas/salchipapa.png" />
         <button class="like-btn" (click)="toggleLikeItem(items[7])">
@@ -107,7 +107,7 @@
     </ion-card>
 
     <!-- Tacos de alambre -->
-    <ion-card class="mini-card">
+    <ion-card class="mini-card" (click)="nav.navigateWithAnimation('/receta-detalle/' + 8, $event)">
       <div class="card-image-wrapper">
         <img alt="Tacos de alambre" src="assets/recetas/tacos de alambre.png" />
         <button class="like-btn" (click)="toggleLikeItem(items[8])">

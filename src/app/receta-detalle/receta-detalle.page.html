@@ -12,29 +12,25 @@
 
 
 <ion-content>
-  <ion-card>
-      <img alt="Albóndigas de carne" src="assets/recetas/albondigas de carne.png" />
+  <ion-card *ngIf="recetaActual">
+    <img [alt]="recetaActual.nombre" [src]="recetaActual.imagen" />
+
     <ion-card-header>
-      <ion-card-title>Albóndigas de carne</ion-card-title>
-      <ion-card-subtitle>Dificultad baja</ion-card-subtitle>
-      <ion-card-subtitle>Tiempo de preparacion: 30m</ion-card-subtitle>
+      <ion-card-title>{{ recetaActual.nombre }}</ion-card-title>
+      <ion-card-subtitle>Dificultad: {{ recetaActual.dificultad }}</ion-card-subtitle>
+      <ion-card-subtitle>Tiempo de preparación: {{ recetaActual.tiempo }}</ion-card-subtitle>
     </ion-card-header>
 
     <ion-card-content>
-      Ingredientes:
+      <strong>Ingredientes:</strong>
       <ul>
-        <li>500 gramos de carne molida</li>
-        <li>2 huevos</li>
-        <li>1 cebolla</li>
-        <li>3 cucharadas soperas de pan rallado</li>
-        <li>Harina</li>
-        <li>1 pizca de orégano</li>
-        <li>1 pizca de ajo en polvo</li>
-        <li>1 cucharada sopera de perejil fresco</li>
-        <li>Sal (al gusto)</li>
+        <li *ngFor="let ingrediente of recetaActual.ingredientes">
+          {{ ingrediente }}
+        </li>
       </ul>
     </ion-card-content>
   </ion-card>
+
 </ion-content>
 
 

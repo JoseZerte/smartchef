@@ -15,7 +15,11 @@ export const routes: Routes = [
   },
 
   {
-    path: 'receta-detalle',
+    path: 'receta-detalle/:id',
     loadComponent: () => import('./receta-detalle/receta-detalle.page').then( m => m.RecetaDetallePage)
   },
+  {
+    path: 'usuario',
+    loadComponent: () => import('./usuario/usuario.component').then(m => m.UsuarioComponent)
+  }
 ];

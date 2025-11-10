@@ -1,14 +1,14 @@
 import { Component, OnInit, inject } from '@angular/core';
-import {IonCard, IonCardHeader, IonCardTitle, IonContent} from "@ionic/angular/standalone";
+import { IonCard, IonCardHeader, IonCardTitle, IonContent } from "@ionic/angular/standalone";
 import { Router } from "@angular/router";
-import {navigate} from "ionicons/icons";
+import { navigate } from "ionicons/icons";
 import { Navigation } from '../services/navigation';
 
 @Component({
-    selector: 'app-contenido-pp',
-    templateUrl: './contenido-pp.component.html',
-    styleUrls: ['./contenido-pp.component.scss'],
-    standalone: true,
+  selector: 'app-contenido-pp',
+  templateUrl: './contenido-pp.component.html',
+  styleUrls: ['./contenido-pp.component.scss'],
+  standalone: true,
   imports: [
     IonCard,
     IonCardHeader,
@@ -16,9 +16,8 @@ import { Navigation } from '../services/navigation';
     IonContent,
   ]
 })
-export class ContenidoPPComponent  implements OnInit {
+export class ContenidoPPComponent implements OnInit {
 
-  // Lista de items (cards)
   items = [
     { titulo: 'Albóndigas de carne', img: 'assets/recetas/albondigas de carne.png', liked: false },
     { titulo: 'Alambre de puerco', img: 'assets/recetas/alambre de puerco.png', liked: false },
@@ -32,50 +31,24 @@ export class ContenidoPPComponent  implements OnInit {
   ];
 
   private router = inject(Router);
-
-
-
   public nav = inject(Navigation);
 
-  // Alterna el liked usando el índice (para tu HTML actual con items[i])
-  toggleLike(index: number) {
-    this.items[index].liked = !this.items[index].liked;
-  }
+  ngOnInit() {}
 
-  // Alterna el liked usando el item directamente
   toggleLikeItem(item: { titulo: string; img: string; liked: boolean }) {
     item.liked = !item.liked;
   }
 
-
-
-
-
-  ngOnInit() {}
-
-
   protected readonly navigate = navigate;
 
   navigateWithAnimation(route: string, $event: any) {
-    // @ts-ignore
-    const icon = event.target;
-    // @ts-ignore
+    const icon = $event.target;
     icon.classList.add('clicked');
 
     setTimeout(() => {
-      // @ts-ignore
       icon.classList.remove('clicked');
       this.router.navigate([route]);
-    })
+    });
   }
 }
-
-
-
-
-
-
-
-
-
 
