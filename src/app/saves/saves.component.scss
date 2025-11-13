@@ -1,0 +1,61 @@
+.anadir {
+padding: 20px;
+  width: 30%;
+
+}
+
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 16px;
+  padding: 16px;
+}
+
+ion-card {
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+  height: 150px; /* ajusta según quieras que sean cuadrados */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  &:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  }
+
+  ion-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    ion-button {
+      margin-left: 8px;
+      height: 24px;
+      font-size: 14px;
+    }
+  }
+
+  ion-card-content {
+    font-size: 14px;
+    color: #555;
+  }
+}
+
+.agregar-coleccion {
+  display: flex;
+  align-items: center; /* centra verticalmente el texto con el botón */
+  gap: 8px; /* separación entre botón y texto */
+
+  .texto-boton {
+    font-size: 16px;
+    font-weight: 500;
+    color: #000; /* cambia al color que quieras */
+  }
+
+  ion-button.anadir {
+    --padding-start: 8px; /* opcional, ajusta para que no esté demasiado pegado al icono */
+  }
+}
+
+

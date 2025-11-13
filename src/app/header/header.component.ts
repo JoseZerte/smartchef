@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {IonButton, IonHeader} from "@ionic/angular/standalone";
+import {IonButton, IonHeader, IonSearchbar} from "@ionic/angular/standalone";
 
 @Component({
   selector: 'app-header',
@@ -8,7 +8,8 @@ import {IonButton, IonHeader} from "@ionic/angular/standalone";
   standalone: true,
   imports: [
     IonButton,
-    IonHeader
+    IonHeader,
+    IonSearchbar
   ]
 })
 export class HeaderComponent  implements OnInit {

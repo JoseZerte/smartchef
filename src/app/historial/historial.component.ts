@@ -1,16 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 import {FooterComponent} from "../footer/footer.component";
-import {IonFooter} from "@ionic/angular/standalone";
+import {IonFooter, IonHeader} from "@ionic/angular/standalone";
 
 @Component({
     selector: 'app-historial',
     templateUrl: './historial.component.html',
     styleUrls: ['./historial.component.scss'],
     standalone: true,
-    imports: [
-        FooterComponent,
-        IonFooter
-    ]
+  imports: [
+    FooterComponent,
+    IonFooter,
+    IonHeader
+  ]
 })
 export class HistorialComponent  implements OnInit {
 
