@@ -1,28 +1,18 @@
 .login-content {
-  --background: #1e1e1e; // fondo oscuro de toda la pantalla
+  --background: #ffffff;  // Fondo blanco
   display: flex;
-  justify-content: center;
-  align-items: center;
+  flex-direction: column;
+  justify-content: center; // Centrado vertical
+  align-items: center;     // Centrado horizontal
+  height: 100vh;           // Asegura que ocupe toda la pantalla
+  padding: 0;              // Quitar cualquier padding interno
 }
 
-.login-container {
+.login-wrapper {
   width: 90%;
   max-width: 400px;
   text-align: center;
 }
 
-ion-input {
-  --background: rgba(255,255,255,0.05);
-  color: white;
-  --placeholder-color: rgba(255,255,255,0.6);
-  margin: 10px 0;
-}
 
-.login-btn {
-  margin-top: 20px;
-}
 
-.register-btn {
-  margin-top: 10px;
-  color: #00d1b2;
-}

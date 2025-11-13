@@ -21,5 +21,17 @@ export const routes: Routes = [
   {
     path: 'usuario',
     loadComponent: () => import('./usuario/usuario.component').then(m => m.UsuarioComponent)
+  },
+  {
+    path: 'mg',
+    loadComponent: () => import('./mg/mg.component').then(m => m.MgComponent)
+  },
+  {
+    path: 'saves',
+    loadComponent: () => import('./saves/saves.component').then(m => m.SavesComponent)
+  },
+  {
+    path: 'historial',
+    loadComponent: () => import('./historial/historial.component').then(m => m.HistorialComponent)
   }
-];
+  ];
