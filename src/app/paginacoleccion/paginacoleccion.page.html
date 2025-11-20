@@ -1,0 +1,44 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>{{ coleccion?.nombre }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <h2>Recetas en esta colección</h2>
+
+  <ion-list>
+    <ion-item *ngFor="let r of coleccion?.recetas">
+
+      <ion-thumbnail slot="start">
+        <img [src]="r.img" />
+      </ion-thumbnail>
+
+      <ion-label>{{ r.titulo }}</ion-label>
+
+      <ion-button slot="end" color="danger" (click)="quitarReceta(r)">
+        Quitar
+      </ion-button>
+    </ion-item>
+  </ion-list>
+
+  <h2>Añadir recetas con me gusta</h2>
+
+  <ion-list>
+    <ion-item *ngFor="let r of recetasLike">
+
+      <ion-thumbnail slot="start">
+        <img [src]="r.img" />
+      </ion-thumbnail>
+
+      <ion-label>{{ r.titulo }}</ion-label>
+
+      <ion-button slot="end" (click)="agregarReceta(r)">
+        Añadir
+      </ion-button>
+    </ion-item>
+  </ion-list>
+
+</ion-content>
+
