@@ -12,16 +12,16 @@
 
 
 <ion-content>
-  <ion-card *ngIf="recetaActual">
+  <ion-card class="card" *ngIf="recetaActual">
     <img [alt]="recetaActual.nombre" [src]="recetaActual.imagen" />
 
-    <ion-card-header>
-      <ion-card-title>{{ recetaActual.nombre }}</ion-card-title>
-      <ion-card-subtitle>Dificultad: {{ recetaActual.dificultad }}</ion-card-subtitle>
-      <ion-card-subtitle>Tiempo de preparación: {{ recetaActual.tiempo }}</ion-card-subtitle>
+    <ion-card-header class="cardheader">
+      <ion-card-title class="cardtitle">{{ recetaActual.nombre }}</ion-card-title>
+      <ion-card-subtitle class="cardsub">Dificultad: {{ recetaActual.dificultad }}</ion-card-subtitle>
+      <ion-card-subtitle class="cardsub">Tiempo de preparación: {{ recetaActual.tiempo }}</ion-card-subtitle>
     </ion-card-header>
 
-    <ion-card-content>
+    <ion-card-content class="cardcontent">
       <strong>Ingredientes:</strong>
       <ul>
         <li *ngFor="let ingrediente of recetaActual.ingredientes">
@@ -30,6 +30,10 @@
       </ul>
     </ion-card-content>
   </ion-card>
+
+
+  <ion-button>Añadir ingredientes a la cesta</ion-button>
+
 
 </ion-content>
 

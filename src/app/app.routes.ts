@@ -33,5 +33,13 @@ export const routes: Routes = [
   {
     path: 'historial',
     loadComponent: () => import('./historial/historial.component').then(m => m.HistorialComponent)
+  },
+  {
+    path: 'paginacoleccion',
+    loadComponent: () => import('./paginacoleccion/paginacoleccion.page').then( m => m.PaginacoleccionPage)
+  },
+  {
+    path: 'coleccion/:id',
+    loadComponent: () => import('./paginacoleccion/paginacoleccion.page').then(m => m.PaginacoleccionPage)
   }
-  ];
+];

@@ -15,28 +15,28 @@
 
 
   <div class="grid-container">
-  <div *ngFor="let c of colecciones; let i = index">
-    <ion-card (click)="abrirColeccion(i)">
-      <ion-card-header>
-        <ion-card-title>
-          <ng-container *ngIf="!c.editando; else editando">
-            {{ c.nombre }}
-            <ion-button fill="clear" size="small" (click)="editarNombre(c, $event)">
-              ✏️
-            </ion-button>
-          </ng-container>
+    <div *ngFor="let c of colecciones; let i = index">
+      <ion-card (click)="abrirColeccion(i)">
+        <ion-card-header>
+          <ion-card-title>
+            <ng-container *ngIf="!c.editando; else editando">
+              {{ c.nombre }}
+              <ion-button fill="clear" size="small" (click)="editarNombre(c, $event)">
+                ✏️
+              </ion-button>
+            </ng-container>
 
-          <ng-template #editando>
-            <ion-input [(ngModel)]="c.nombre" (ionBlur)="guardarNombre(c)"></ion-input>
-          </ng-template>
-        </ion-card-title>
-      </ion-card-header>
+            <ng-template #editando>
+              <ion-input [(ngModel)]="c.nombre" (ionBlur)="guardarNombre(c)"></ion-input>
+            </ng-template>
+          </ion-card-title>
+        </ion-card-header>
 
-      <ion-card-content>
-        {{ c.recetas.length ? c.recetas.length + ' recetas' : 'No hay recetas todavía' }}
-      </ion-card-content>
-    </ion-card>
-  </div>
+        <ion-card-content>
+          {{ c.recetas.length ? c.recetas.length + ' recetas' : 'No hay recetas todavía' }}
+        </ion-card-content>
+      </ion-card>
+    </div>
   </div>
 </ion-content>
 

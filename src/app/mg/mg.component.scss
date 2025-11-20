@@ -1,0 +1,45 @@
+/* ===== SOLO ESTO SE APLICA A MG ===== */
+
+.mg-empty {
+  text-align: center;
+  margin-top: 40%;
+  font-size: 1.2rem;
+  color: #666;
+}
+
+/* GRID DE 2 COLUMNAS */
+.mg-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  padding: 12px;
+}
+
+/* TARJETA */
+.mg-card {
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+  cursor: pointer;
+  transition: transform .15s ease;
+}
+
+.mg-card:hover {
+  transform: scale(1.02);
+}
+
+/* IMAGEN DE LA TARJETA */
+.mg-img {
+  width: 100%;
+  height: 120px;
+  object-fit: cover;
+  display: block;
+}
+
+/* TÍTULO */
+.mg-title {
+  font-size: 0.9rem;
+  text-align: center;
+  padding: 6px;
+}
+

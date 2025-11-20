@@ -208,50 +208,26 @@ export class RecetaDetallePage implements OnInit {
     ];
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    constructor() {
-    const id = Number(this.route.snapshot.paramMap.get('id'));
-    this.recetaActual = this.recetas[id] || this.recetas[0];
+  ngOnInit() {
+    const titulo = this.route.snapshot.paramMap.get('id');
+    if (titulo) {
+      this.recetaActual = this.recetas.find(r => r.nombre === titulo);
+    }
   }
 
-  ngOnInit() {}
+
+
 
   navigateWithAnimation(route: string, $event: any) {
     const icon = $event.target;
     icon.classList.add('clicked');
+
     setTimeout(() => {
       icon.classList.remove('clicked');
       this.router.navigate([route]);
     });
   }
 }
+
+
+

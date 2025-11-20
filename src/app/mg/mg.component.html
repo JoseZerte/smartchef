@@ -1,24 +1,28 @@
 <ion-header>
-
-  <app-header></app-header>
-
+  <ion-toolbar>
+    <ion-title>Me gusta ❤️</ion-title>
+  </ion-toolbar>
 </ion-header>
 
+<ion-content>
 
+  <div *ngIf="!recetas.length" class="mg-empty">
+    Aún no has dado like a ninguna receta.
+  </div>
 
+  <div class="mg-grid" *ngIf="recetas.length">
+    <ion-card *ngFor="let r of recetas" (click)="abrirDetalle(r)" class="mg-card">
+      <img [src]="r.img" [alt]="r.titulo" class="mg-img" />
+      <ion-card-header>
+        <ion-card-title class="mg-title">{{ r.titulo }}</ion-card-title>
+      </ion-card-header>
+    </ion-card>
+  </div>
 
-
-
-
-
-
-
-
+</ion-content>
 
 <ion-footer>
-
   <app-footer></app-footer>
-
 </ion-footer>
 
 

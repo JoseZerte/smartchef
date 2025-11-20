@@ -32,7 +32,6 @@ interface Coleccion {
   imports: [
     FormsModule,
     IonInput,
-    IonItem,
     CommonModule,
     FooterComponent,
     IonFooter,
@@ -45,7 +44,7 @@ interface Coleccion {
     IonCardHeader,
     IonCardTitle,
     IonCardContent,
-    IonText,
+
   ]
 })
 export class SavesComponent {
@@ -73,6 +72,7 @@ export class SavesComponent {
   }
 
   abrirColeccion(index: number) {
-    this.router.navigate(['/coleccion-detalle', index]);
+    this.router.navigate(['/coleccion', index]);
   }
 }
+

@@ -2,10 +2,10 @@
   <div class="cards-wrapper">
 
     <!-- Albóndigas de carne -->
-    <ion-card class="mini-card" (click)="nav.navigateWithAnimation('/receta-detalle/' + 0, $event)">
+    <ion-card class="mini-card" (click)="nav.navigateWithAnimation('/receta-detalle/' + items[0].titulo , $event)">
       <div class="card-image-wrapper">
         <img alt="Albóndigas de carne" src="assets/recetas/albondigas de carne.png" />
-        <button class="like-btn" (click)="toggleLikeItem(items[0]); $event.stopPropagation();">
+        <button class="like-btn" (click)="toggleLikeItem(items[0], $event)">
           <img [src]="items[0].liked ? 'assets/icon/heartrelleno.svg' : 'assets/icon/heart-outline.svg'" alt="Heart">
         </button>
       </div>
@@ -14,12 +14,11 @@
       </ion-card-header>
     </ion-card>
 
-
     <!-- Alambre de puerco -->
-    <ion-card class="mini-card" (click)="nav.navigateWithAnimation('/receta-detalle/' + 1, $event)">
+    <ion-card class="mini-card" (click)="nav.navigateWithAnimation('/receta-detalle/' + items[1].titulo, $event)">
       <div class="card-image-wrapper">
         <img alt="Alambre de puerco" src="assets/recetas/alambre de puerco.png" />
-        <button class="like-btn" (click)="toggleLikeItem(items[1])">
+        <button class="like-btn" (click)="toggleLikeItem(items[1], $event)">
           <img [src]="items[1].liked ? 'assets/icon/heartrelleno.svg' : 'assets/icon/heart-outline.svg'" alt="Heart">
         </button>
       </div>
@@ -29,10 +28,10 @@
     </ion-card>
 
     <!-- Adobito Sevillano -->
-    <ion-card class="mini-card" (click)="nav.navigateWithAnimation('/receta-detalle/' + 2, $event)">
+    <ion-card class="mini-card" (click)="nav.navigateWithAnimation('/receta-detalle/' + items[2].titulo, $event)">
       <div class="card-image-wrapper">
         <img alt="Adobito Sevillano" src="assets/recetas/adobito%20sevillano.png" />
-        <button class="like-btn" (click)="toggleLikeItem(items[2])">
+        <button class="like-btn" (click)="toggleLikeItem(items[2], $event)">
           <img [src]="items[2].liked ? 'assets/icon/heartrelleno.svg' : 'assets/icon/heart-outline.svg'" alt="Heart">
         </button>
       </div>
@@ -42,10 +41,10 @@
     </ion-card>
 
     <!-- Ceviche de corvina -->
-    <ion-card class="mini-card" (click)="nav.navigateWithAnimation('/receta-detalle/' + 3, $event)">
+    <ion-card class="mini-card" (click)="nav.navigateWithAnimation('/receta-detalle/' + items[3].titulo, $event)">
       <div class="card-image-wrapper">
         <img alt="Ceviche de corvina" src="assets/recetas/ceviche de corvina.png" />
-        <button class="like-btn" (click)="toggleLikeItem(items[3])">
+        <button class="like-btn" (click)="toggleLikeItem(items[3], $event)">
           <img [src]="items[3].liked ? 'assets/icon/heartrelleno.svg' : 'assets/icon/heart-outline.svg'" alt="Heart">
         </button>
       </div>
@@ -55,10 +54,10 @@
     </ion-card>
 
     <!-- Fabada Gallega -->
-    <ion-card class="mini-card" (click)="nav.navigateWithAnimation('/receta-detalle/' + 4, $event)">
+    <ion-card class="mini-card" (click)="nav.navigateWithAnimation('/receta-detalle/' + items[4].titulo, $event)">
       <div class="card-image-wrapper">
         <img alt="Fabada Gallega" src="assets/recetas/fabada gallega.png" />
-        <button class="like-btn" (click)="toggleLikeItem(items[4])">
+        <button class="like-btn" (click)="toggleLikeItem(items[4], $event)">
           <img [src]="items[4].liked ? 'assets/icon/heartrelleno.svg' : 'assets/icon/heart-outline.svg'" alt="Heart">
         </button>
       </div>
@@ -68,10 +67,10 @@
     </ion-card>
 
     <!-- Galletas de avena -->
-    <ion-card class="mini-card" (click)="nav.navigateWithAnimation('/receta-detalle/' + 5, $event)">
+    <ion-card class="mini-card" (click)="nav.navigateWithAnimation('/receta-detalle/' + items[5].titulo, $event)">
       <div class="card-image-wrapper">
         <img alt="Galletas de avena" src="assets/recetas/galletas de avena.png" />
-        <button class="like-btn" (click)="toggleLikeItem(items[5])">
+        <button class="like-btn" (click)="toggleLikeItem(items[5], $event)">
           <img [src]="items[5].liked ? 'assets/icon/heartrelleno.svg' : 'assets/icon/heart-outline.svg'" alt="Heart">
         </button>
       </div>
@@ -81,10 +80,10 @@
     </ion-card>
 
     <!-- Panqueques -->
-    <ion-card class="mini-card" (click)="nav.navigateWithAnimation('/receta-detalle/' + 6, $event)">
+    <ion-card class="mini-card" (click)="nav.navigateWithAnimation('/receta-detalle/' + items[6].titulo, $event)">
       <div class="card-image-wrapper">
         <img alt="Panqueques" src="assets/recetas/panqueques.png" />
-        <button class="like-btn" (click)="toggleLikeItem(items[6])">
+        <button class="like-btn" (click)="toggleLikeItem(items[6], $event)">
           <img [src]="items[6].liked ? 'assets/icon/heartrelleno.svg' : 'assets/icon/heart-outline.svg'" alt="Heart">
         </button>
       </div>
@@ -94,10 +93,10 @@
     </ion-card>
 
     <!-- Salchipapa -->
-    <ion-card class="mini-card" (click)="nav.navigateWithAnimation('/receta-detalle/' + 7, $event)">
+    <ion-card class="mini-card" (click)="nav.navigateWithAnimation('/receta-detalle/' + items[7].titulo, $event)">
       <div class="card-image-wrapper">
         <img alt="Salchipapa" src="assets/recetas/salchipapa.png" />
-        <button class="like-btn" (click)="toggleLikeItem(items[7])">
+        <button class="like-btn" (click)="toggleLikeItem(items[7], $event)">
           <img [src]="items[7].liked ? 'assets/icon/heartrelleno.svg' : 'assets/icon/heart-outline.svg'" alt="Heart">
         </button>
       </div>
@@ -107,10 +106,10 @@
     </ion-card>
 
     <!-- Tacos de alambre -->
-    <ion-card class="mini-card" (click)="nav.navigateWithAnimation('/receta-detalle/' + 8, $event)">
+    <ion-card class="mini-card" (click)="nav.navigateWithAnimation('/receta-detalle/' + items[8].titulo, $event)">
       <div class="card-image-wrapper">
         <img alt="Tacos de alambre" src="assets/recetas/tacos de alambre.png" />
-        <button class="like-btn" (click)="toggleLikeItem(items[8])">
+        <button class="like-btn" (click)="toggleLikeItem(items[8], $event)">
           <img [src]="items[8].liked ? 'assets/icon/heartrelleno.svg' : 'assets/icon/heart-outline.svg'" alt="Heart">
         </button>
       </div>
@@ -118,7 +117,7 @@
         <ion-card-title>Tacos de alambre</ion-card-title>
       </ion-card-header>
     </ion-card>
+
   </div>
 </ion-content>
-
 
