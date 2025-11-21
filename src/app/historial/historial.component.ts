@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {FooterComponent} from "../footer/footer.component";
-import {IonFooter, IonHeader} from "@ionic/angular/standalone";
+import {IonButton, IonButtons, IonContent, IonFooter, IonHeader, IonTitle, IonToolbar} from "@ionic/angular/standalone";
 
 @Component({
     selector: 'app-historial',
@@ -10,7 +10,12 @@ import {IonFooter, IonHeader} from "@ionic/angular/standalone";
   imports: [
     FooterComponent,
     IonFooter,
-    IonHeader
+    IonHeader,
+    IonButton,
+    IonButtons,
+    IonContent,
+    IonTitle,
+    IonToolbar
   ]
 })
 export class HistorialComponent  implements OnInit {

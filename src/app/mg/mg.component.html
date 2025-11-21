@@ -1,7 +1,13 @@
-<ion-header>
+<ion-header [translucent]="true">
   <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="navigateWithAnimation('/home', $event)">
+        <img src="assets/icon/arrow-back-outline.svg" alt="Volver" height="20" width="20">
+      </ion-button>
+    </ion-buttons>
     <ion-title>Me gusta ❤️</ion-title>
   </ion-toolbar>
+
 </ion-header>
 
 <ion-content>

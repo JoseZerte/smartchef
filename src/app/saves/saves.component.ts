@@ -47,7 +47,16 @@ interface Coleccion {
 
   ]
 })
-export class SavesComponent {
+export class SavesComponent implements OnInit{
+
+  ngOnInit() {
+    const saved = localStorage.getItem('colecciones');
+    this.colecciones = saved ? JSON.parse(saved) : [];
+
+    // actualizamos contador
+    this.contador = this.colecciones.length + 1;
+  }
+
   private router = inject(Router);
 
   colecciones: Coleccion[] = [];
@@ -60,6 +69,9 @@ export class SavesComponent {
     };
     this.colecciones = [...this.colecciones, nueva];
     this.contador++;
+
+    // 🔥 Guardar en localStorage
+    localStorage.setItem('colecciones', JSON.stringify(this.colecciones));
   }
 
   editarNombre(c: Coleccion, event: Event) {
