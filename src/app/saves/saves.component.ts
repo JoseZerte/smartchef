@@ -31,8 +31,6 @@ interface Coleccion {
   imports: [
     FormsModule,
     IonInput,
-    FooterComponent,
-    IonFooter,
     IonHeader,
     IonToolbar,
     IonContent,

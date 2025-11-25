@@ -1,7 +1,7 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import {
-  IonButton,
+  IonButton, IonButtons,
   IonContent,
   IonHeader,
   IonItem,
@@ -24,7 +24,7 @@ interface Coleccion {
   templateUrl: './paginacoleccion.page.html',
   styleUrls: ['./paginacoleccion.page.scss'],
   standalone: true,
-  imports: [IonContent, IonHeader, IonTitle, IonToolbar, FormsModule, IonButton, IonList, IonItem, IonThumbnail, IonLabel]
+  imports: [IonContent, IonHeader, IonTitle, IonToolbar, FormsModule, IonButton, IonList, IonItem, IonThumbnail, IonLabel, IonButtons]
 })
 export class PaginacoleccionPage implements OnInit {
 

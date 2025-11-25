@@ -27,9 +27,7 @@ import { FooterComponent } from '../footer/footer.component';
     IonCard,
     IonCardHeader,
     IonCardTitle,
-    FooterComponent,
     IonHeader,
-    IonFooter,
     IonToolbar,
     IonTitle
   ]
