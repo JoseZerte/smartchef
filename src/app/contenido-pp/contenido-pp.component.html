@@ -1,123 +1,19 @@
 <ion-content>
   <div class="cards-wrapper">
 
-    <!-- Albóndigas de carne -->
-    <ion-card class="mini-card" (click)="nav.navigateWithAnimation('/receta-detalle/' + items[0].titulo , $event)">
-      <div class="card-image-wrapper">
-        <img alt="Albóndigas de carne" src="assets/recetas/albondigas de carne.png" />
-        <button class="like-btn" (click)="toggleLikeItem(items[0], $event)">
-          <img [src]="items[0].liked ? 'assets/icon/heartrelleno.svg' : 'assets/icon/heart-outline.svg'" alt="Heart">
-        </button>
-      </div>
-      <ion-card-header>
-        <ion-card-title>Albóndigas de carne</ion-card-title>
-      </ion-card-header>
-    </ion-card>
-
-    <!-- Alambre de puerco -->
-    <ion-card class="mini-card" (click)="nav.navigateWithAnimation('/receta-detalle/' + items[1].titulo, $event)">
-      <div class="card-image-wrapper">
-        <img alt="Alambre de puerco" src="assets/recetas/alambre de puerco.png" />
-        <button class="like-btn" (click)="toggleLikeItem(items[1], $event)">
-          <img [src]="items[1].liked ? 'assets/icon/heartrelleno.svg' : 'assets/icon/heart-outline.svg'" alt="Heart">
-        </button>
-      </div>
-      <ion-card-header>
-        <ion-card-title>Alambre de puerco</ion-card-title>
-      </ion-card-header>
-    </ion-card>
-
-    <!-- Adobito Sevillano -->
-    <ion-card class="mini-card" (click)="nav.navigateWithAnimation('/receta-detalle/' + items[2].titulo, $event)">
-      <div class="card-image-wrapper">
-        <img alt="Adobito Sevillano" src="assets/recetas/adobito%20sevillano.png" />
-        <button class="like-btn" (click)="toggleLikeItem(items[2], $event)">
-          <img [src]="items[2].liked ? 'assets/icon/heartrelleno.svg' : 'assets/icon/heart-outline.svg'" alt="Heart">
-        </button>
-      </div>
-      <ion-card-header>
-        <ion-card-title>Adobito Sevillano</ion-card-title>
-      </ion-card-header>
-    </ion-card>
-
-    <!-- Ceviche de corvina -->
-    <ion-card class="mini-card" (click)="nav.navigateWithAnimation('/receta-detalle/' + items[3].titulo, $event)">
-      <div class="card-image-wrapper">
-        <img alt="Ceviche de corvina" src="assets/recetas/ceviche de corvina.png" />
-        <button class="like-btn" (click)="toggleLikeItem(items[3], $event)">
-          <img [src]="items[3].liked ? 'assets/icon/heartrelleno.svg' : 'assets/icon/heart-outline.svg'" alt="Heart">
-        </button>
-      </div>
-      <ion-card-header>
-        <ion-card-title>Ceviche de corvina</ion-card-title>
-      </ion-card-header>
-    </ion-card>
-
-    <!-- Fabada Gallega -->
-    <ion-card class="mini-card" (click)="nav.navigateWithAnimation('/receta-detalle/' + items[4].titulo, $event)">
-      <div class="card-image-wrapper">
-        <img alt="Fabada Gallega" src="assets/recetas/fabada gallega.png" />
-        <button class="like-btn" (click)="toggleLikeItem(items[4], $event)">
-          <img [src]="items[4].liked ? 'assets/icon/heartrelleno.svg' : 'assets/icon/heart-outline.svg'" alt="Heart">
-        </button>
-      </div>
-      <ion-card-header>
-        <ion-card-title>Fabada Gallega</ion-card-title>
-      </ion-card-header>
-    </ion-card>
-
-    <!-- Galletas de avena -->
-    <ion-card class="mini-card" (click)="nav.navigateWithAnimation('/receta-detalle/' + items[5].titulo, $event)">
-      <div class="card-image-wrapper">
-        <img alt="Galletas de avena" src="assets/recetas/galletas de avena.png" />
-        <button class="like-btn" (click)="toggleLikeItem(items[5], $event)">
-          <img [src]="items[5].liked ? 'assets/icon/heartrelleno.svg' : 'assets/icon/heart-outline.svg'" alt="Heart">
-        </button>
-      </div>
-      <ion-card-header>
-        <ion-card-title>Galletas de avena</ion-card-title>
-      </ion-card-header>
-    </ion-card>
-
-    <!-- Panqueques -->
-    <ion-card class="mini-card" (click)="nav.navigateWithAnimation('/receta-detalle/' + items[6].titulo, $event)">
-      <div class="card-image-wrapper">
-        <img alt="Panqueques" src="assets/recetas/panqueques.png" />
-        <button class="like-btn" (click)="toggleLikeItem(items[6], $event)">
-          <img [src]="items[6].liked ? 'assets/icon/heartrelleno.svg' : 'assets/icon/heart-outline.svg'" alt="Heart">
-        </button>
-      </div>
-      <ion-card-header>
-        <ion-card-title>Panqueques</ion-card-title>
-      </ion-card-header>
-    </ion-card>
-
-    <!-- Salchipapa -->
-    <ion-card class="mini-card" (click)="nav.navigateWithAnimation('/receta-detalle/' + items[7].titulo, $event)">
-      <div class="card-image-wrapper">
-        <img alt="Salchipapa" src="assets/recetas/salchipapa.png" />
-        <button class="like-btn" (click)="toggleLikeItem(items[7], $event)">
-          <img [src]="items[7].liked ? 'assets/icon/heartrelleno.svg' : 'assets/icon/heart-outline.svg'" alt="Heart">
-        </button>
-      </div>
-      <ion-card-header>
-        <ion-card-title>Salchipapa</ion-card-title>
-      </ion-card-header>
-    </ion-card>
-
-    <!-- Tacos de alambre -->
-    <ion-card class="mini-card" (click)="nav.navigateWithAnimation('/receta-detalle/' + items[8].titulo, $event)">
-      <div class="card-image-wrapper">
-        <img alt="Tacos de alambre" src="assets/recetas/tacos de alambre.png" />
-        <button class="like-btn" (click)="toggleLikeItem(items[8], $event)">
-          <img [src]="items[8].liked ? 'assets/icon/heartrelleno.svg' : 'assets/icon/heart-outline.svg'" alt="Heart">
-        </button>
-      </div>
-      <ion-card-header>
-        <ion-card-title>Tacos de alambre</ion-card-title>
-      </ion-card-header>
-    </ion-card>
+    @for (item of itemsConLike; track item.id) {
+      <ion-card class="mini-card" (click)="navegarAReceta(item.id, $event)">
+        <div class="card-image-wrapper">
+          <img [alt]="item.nombre" [src]="item.imagen" />
+          <button class="like-btn" (click)="toggleLikeItem(item, $event)">
+            <img [src]="item.liked ? 'assets/icon/heartrelleno.svg' : 'assets/icon/heart-outline.svg'" alt="Heart">
+          </button>
+        </div>
+        <ion-card-header>
+          <ion-card-title>{{ item.nombre }}</ion-card-title>
+        </ion-card-header>
+      </ion-card>
+    }
 
   </div>
 </ion-content>
-

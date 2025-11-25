@@ -1,22 +1,24 @@
-<ion-footer>
-  <ion-toolbar class="footer-icons">
-    <div class="footer-buttons">
-      <ion-button fill="clear" (click)="nav.navigateWithAnimation('/home', $event)">
+  <ion-tabs slot="bottom">
+    <ion-tab-bar slot="bottom">
+      <ion-tab-button (click)="nav.navigateWithAnimation('/home', $event)">
         <img ngSrc="assets/icon/home-outline.svg" alt="Home" height="16" width="16">
-      </ion-button>
-      <ion-button fill="clear" (click)="nav.navigateWithAnimation('/mg', $event)">
+        <ion-label>Home</ion-label>
+      </ion-tab-button>
+      <ion-tab-button (click)="nav.navigateWithAnimation('/mg', $event)">
         <img ngSrc="assets/icon/heart-outline.svg" alt="Heart" height="16" width="16">
-      </ion-button>
-      <ion-button fill="clear" (click)="nav.navigateWithAnimation('/saves', $event)">
+        <ion-label>Favoritos</ion-label>
+      </ion-tab-button>
+      <ion-tab-button (click)="nav.navigateWithAnimation('/saves', $event)">
         <img ngSrc="assets/icon/bookmark-outline.svg" alt="Saves" height="16" width="16">
-      </ion-button>
-      <ion-button fill="clear" (click)="nav.navigateWithAnimation('/historial', $event)">
+        <ion-label>Guardados</ion-label>
+      </ion-tab-button>
+      <ion-tab-button (click)="nav.navigateWithAnimation('/historial', $event)">
         <img ngSrc="assets/icon/time-outline.svg" alt="History" height="16" width="16">
-      </ion-button>
-      <ion-button fill="clear" (click)="nav.navigateWithAnimation('/usuario', $event)">
+        <ion-label>Historial</ion-label>
+      </ion-tab-button>
+      <ion-tab-button (click)="nav.navigateWithAnimation('/usuario', $event)">
         <img ngSrc="assets/icon/person-outline.svg" alt="User" height="16" width="16">
-      </ion-button>
-    </div>
-  </ion-toolbar>
-</ion-footer>
-
+        <ion-label>Perfil</ion-label>
+      </ion-tab-button>
+    </ion-tab-bar>
+  </ion-tabs>

@@ -1,10 +1,10 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { IonCard, IonCardHeader, IonCardTitle, IonContent } from "@ionic/angular/standalone";
 import { Router } from "@angular/router";
-import { navigate } from "ionicons/icons";
 import { Navigation } from '../services/navigation';
 import { FavoritosService } from '../services/favoritos';
-
+import { RecetasService } from '../services/recetas.service';
+import { Receta, RecetaFavorita } from '../models/receta.model';
 
 @Component({
   selector: 'app-contenido-pp',
@@ -18,66 +18,51 @@ export class ContenidoPPComponent implements OnInit {
   private router = inject(Router);
   public nav = inject(Navigation);
   private favoritos = inject(FavoritosService);
+  private recetasService = inject(RecetasService);
 
-  items = [
-    { titulo: 'Albóndigas de carne', img: 'assets/recetas/albondigas de carne.png', liked: false },
-    { titulo: 'Alambre de puerco', img: 'assets/recetas/alambre de puerco.png', liked: false },
-    { titulo: 'Adobito Sevillano', img: 'assets/recetas/adobito%20sevillano.png', liked: false },
-    { titulo: 'Ceviche de corvina', img: 'assets/recetas/ceviche de corvina.png', liked: false },
-    { titulo: 'Fabada Gallega', img: 'assets/recetas/fabada gallega.png', liked: false },
-    { titulo: 'Galletas de avena', img: 'assets/recetas/galletas de avena.png', liked: false },
-    { titulo: 'Panqueques', img: 'assets/recetas/panqueques.png', liked: false },
-    { titulo: 'Salchipapa', img: 'assets/recetas/salchipapa.png', liked: false },
-    { titulo: 'Tacos de alambre', img: 'assets/recetas/tacos de alambre.png', liked: false },
-  ];
+  recetas: Receta[] = [];
+  itemsConLike: RecetaFavorita[] = [];
 
-  ngOnInit() {
-    this.items.forEach(item => {
-      item.liked = this.favoritos.estaFavorito(item.titulo);
-    });
+  ngOnInit(): void {
+    this.recetas = this.recetasService.obtenerTodas();
+    this.itemsConLike = this.recetas.map(r => ({
+      id: r.id,
+      nombre: r.nombre,
+      imagen: r.imagen,
+      liked: this.favoritos.estaFavorito(r.id)
+    }));
   }
 
-  toggleLikeItem(item: { titulo: string; img: string; liked: boolean }, $event: Event) {
+  toggleLikeItem(item: RecetaFavorita, $event: Event): void {
     $event.stopPropagation();
     item.liked = !item.liked;
 
     const saved = localStorage.getItem('recetas');
-    const recetas = saved ? JSON.parse(saved) : [];
+    const recetasGuardadas: RecetaFavorita[] = saved ? JSON.parse(saved) : [];
 
-    const index = recetas.findIndex((r: any) => r.titulo === item.titulo);
+    const index = recetasGuardadas.findIndex(r => r.id === item.id);
     if (item.liked) {
       if (index === -1) {
-        recetas.push(item);
+        recetasGuardadas.push(item);
       } else {
-        recetas[index].liked = true;
+        recetasGuardadas[index].liked = true;
       }
     } else {
       if (index !== -1) {
-        recetas.splice(index, 1);
+        recetasGuardadas.splice(index, 1);
       }
     }
 
-    localStorage.setItem('recetas', JSON.stringify(recetas));
+    localStorage.setItem('recetas', JSON.stringify(recetasGuardadas));
 
     if (item.liked) {
       this.favoritos.agregar(item);
     } else {
-      this.favoritos.eliminar(item.titulo);
+      this.favoritos.eliminar(item.id);
     }
   }
 
-
-
-  protected readonly navigate = navigate;
-
-  navigateWithAnimation(route: string, $event: any) {
-    const icon = $event.target;
-    icon.classList.add('clicked');
-
-    setTimeout(() => {
-      icon.classList.remove('clicked');
-      this.router.navigate([route]);
-    });
+  navegarAReceta(id: number, $event: Event): void {
+    this.nav.navigateWithAnimation('/receta-detalle/' + id, $event);
   }
 }
-

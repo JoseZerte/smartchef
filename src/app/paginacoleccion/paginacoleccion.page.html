@@ -13,36 +13,53 @@
 
 
 
-  <ion-list>
-    <ion-item *ngFor="let r of coleccion?.recetas">
+  @if (coleccion?.recetas?.length) {
+    <ion-list>
+      @for (r of coleccion!.recetas; track r.id) {
+        <ion-item>
+          <ion-thumbnail slot="start">
+            <img [src]="r.imagen" [alt]="r.nombre" />
+          </ion-thumbnail>
 
-      <ion-thumbnail slot="start">
-        <img [src]="r.img" />
-      </ion-thumbnail>
+          <ion-label>{{ r.nombre }}</ion-label>
 
-      <ion-label>{{ r.titulo }}</ion-label>
-
-      <ion-button slot="end" color="danger" (click)="quitarReceta(r)">
-        Quitar
-      </ion-button>
-    </ion-item>
-  </ion-list>
+          <ion-button slot="end" color="danger" (click)="quitarReceta(r)">
+            Quitar
+          </ion-button>
+        </ion-item>
+      }
+    </ion-list>
+  } @else {
+    <p class="empty-message">No hay recetas en esta colección</p>
+  }
 
   <h2>Añadir recetas con me gusta</h2>
 
-  <ion-list>
-    <ion-item *ngFor="let r of recetasLike">
+  @if (recetasLike.length) {
+    <ion-list>
+      @for (r of recetasLike; track r.id) {
+        <ion-item>
+          <ion-thumbnail slot="start">
+            <img [src]="r.imagen" [alt]="r.nombre" />
+          </ion-thumbnail>
 
-      <ion-thumbnail slot="start">
-        <img [src]="r.img" />
-      </ion-thumbnail>
+          <ion-label>{{ r.nombre }}</ion-label>
 
-      <ion-label>{{ r.titulo }}</ion-label>
-
-      <ion-button slot="end" (click)="agregarReceta(r)">
-        Añadir
-      </ion-button>
-    </ion-item>
-  </ion-list>
+          <ion-button 
+            slot="end" 
+            (click)="agregarReceta(r)"
+            [disabled]="estaEnColeccion(r)">
+            @if (estaEnColeccion(r)) {
+              Añadida
+            } @else {
+              Añadir
+            }
+          </ion-button>
+        </ion-item>
+      }
+    </ion-list>
+  } @else {
+    <p class="empty-message">No tienes recetas con me gusta</p>
+  }
 
 </ion-content>

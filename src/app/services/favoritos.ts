@@ -1,37 +1,32 @@
-// favoritos.service.ts
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-
-export interface Receta {
-  titulo: string;
-  img: string;
-}
+import { RecetaFavorita } from '../models/receta.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class FavoritosService {
 
-  private favoritos: Receta[] = [];
-  public favoritos$ = new BehaviorSubject<Receta[]>([]);
+  private favoritos: RecetaFavorita[] = [];
+  public favoritos$ = new BehaviorSubject<RecetaFavorita[]>([]);
 
-  agregar(item: Receta) {
-    if (!this.estaFavorito(item.titulo)) {
-      this.favoritos.push(item);
+  agregar(item: RecetaFavorita): void {
+    if (!this.estaFavorito(item.id)) {
+      this.favoritos.push({ ...item, liked: true });
       this.favoritos$.next([...this.favoritos]);
     }
   }
 
-  eliminar(titulo: string) {
-    this.favoritos = this.favoritos.filter(r => r.titulo !== titulo);
+  eliminar(id: number): void {
+    this.favoritos = this.favoritos.filter(r => r.id !== id);
     this.favoritos$.next([...this.favoritos]);
   }
 
-  estaFavorito(titulo: string): boolean {
-    return this.favoritos.some(r => r.titulo === titulo);
+  estaFavorito(id: number): boolean {
+    return this.favoritos.some(r => r.id === id);
   }
 
-  obtenerTodos(): Receta[] {
+  obtenerTodos(): RecetaFavorita[] {
     return [...this.favoritos];
   }
 }

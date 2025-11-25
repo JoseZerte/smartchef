@@ -12,32 +12,24 @@
 
 <ion-content>
 
-  <div *ngIf="!recetas.length" class="mg-empty">
-    Aún no has dado like a ninguna receta.
-  </div>
+  @if (!recetas.length) {
+    <div class="mg-empty">
+      Aún no has dado like a ninguna receta.
+    </div>
+  }
 
-  <div class="mg-grid" *ngIf="recetas.length">
-    <ion-card *ngFor="let r of recetas" (click)="abrirDetalle(r)" class="mg-card">
-      <img [src]="r.img" [alt]="r.titulo" class="mg-img" />
-      <ion-card-header>
-        <ion-card-title class="mg-title">{{ r.titulo }}</ion-card-title>
-      </ion-card-header>
-    </ion-card>
-  </div>
+  @if (recetas.length) {
+    <div class="mg-grid">
+      @for (r of recetas; track r.id) {
+        <ion-card (click)="abrirDetalle(r)" class="mg-card">
+          <img [src]="r.imagen" [alt]="r.nombre" class="mg-img" />
+          <ion-card-header>
+            <ion-card-title class="mg-title">{{ r.nombre }}</ion-card-title>
+          </ion-card-header>
+        </ion-card>
+      }
+    </div>
+  }
 
 </ion-content>
-
-<ion-footer>
-  <app-footer></app-footer>
-</ion-footer>
-
-
-
-
-
-
-
-
-
-
 
