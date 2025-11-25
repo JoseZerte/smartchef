@@ -9,8 +9,6 @@ import { IonTabs, IonTabBar, IonTabButton, IonLabel } from '@ionic/angular/stand
     templateUrl: './footer.component.html',
     styleUrls: ['./footer.component.scss'],
     imports: [
-        IonButton,
-        IonToolbar,
         NgOptimizedImage,
         IonTabs,
         IonTabBar,

@@ -28,7 +28,6 @@ import { ActivatedRoute, Router } from '@angular/router';
     IonHeader,
     IonTitle,
     IonToolbar,
-    FooterComponent,
     IonCard,
     IonCardHeader,
     IonCardTitle,
