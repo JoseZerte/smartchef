@@ -1,27 +1,61 @@
-import { Component, OnInit } from '@angular/core';
-import {FooterComponent} from "../footer/footer.component";
-import {IonButton, IonButtons, IonContent, IonFooter, IonHeader, IonTitle, IonToolbar} from "@ionic/angular/standalone";
+import { Component, OnInit, inject } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import {
+  IonContent,
+  IonHeader,
+  IonToolbar,
+  IonTitle,
+  IonList,
+  IonItem,
+  IonLabel,
+  IonThumbnail,
+  IonBadge
+} from '@ionic/angular/standalone';
+import { HistorialService, RecetaCocinada } from '../services/historial.service';
 
 @Component({
-    selector: 'app-historial',
-    templateUrl: './historial.component.html',
-    styleUrls: ['./historial.component.scss'],
-    standalone: true,
+  selector: 'app-historial',
+  templateUrl: './historial.component.html',
+  styleUrls: ['./historial.component.scss'],
+  standalone: true,
   imports: [
-    FooterComponent,
-    IonFooter,
-    IonHeader,
-    IonButton,
-    IonButtons,
+    CommonModule,
     IonContent,
+    IonHeader,
+    IonToolbar,
     IonTitle,
-    IonToolbar
+    IonList,
+    IonItem,
+    IonLabel,
+    IonThumbnail,
+    IonBadge
   ]
 })
-export class HistorialComponent  implements OnInit {
+export class HistorialComponent implements OnInit {
+  private historialService = inject(HistorialService);
+  
+  historial: RecetaCocinada[] = [];
 
-  constructor() { }
+  ngOnInit(): void {
+    this.historial = this.historialService.obtenerHistorialSemanal();
+  }
 
-  ngOnInit() {}
+  formatearFecha(fecha: string): string {
+    const date = new Date(fecha);
+    const hoy = new Date();
+    const ayer = new Date();
+    ayer.setDate(ayer.getDate() - 1);
 
+    if (date.toDateString() === hoy.toDateString()) {
+      return 'Hoy';
+    } else if (date.toDateString() === ayer.toDateString()) {
+      return 'Ayer';
+    } else {
+      return date.toLocaleDateString('es-ES', { weekday: 'long', day: 'numeric', month: 'short' });
+    }
+  }
+
+  formatearHora(fecha: string): string {
+    return new Date(fecha).toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' });
+  }
 }

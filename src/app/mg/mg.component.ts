@@ -3,18 +3,17 @@ import { FavoritosService } from '../services/favoritos';
 import { RecetaFavorita } from '../models/receta.model';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { Navigation } from '../services/navigation';
 import {
   IonContent,
   IonCard,
   IonCardHeader,
   IonCardTitle,
-  IonCardContent,
   IonHeader,
-  IonFooter,
   IonToolbar,
-  IonTitle
+  IonTitle, IonButton, IonButtons
 } from '@ionic/angular/standalone';
-import { FooterComponent } from '../footer/footer.component';
+
 
 @Component({
   selector: 'app-mg',
@@ -29,12 +28,15 @@ import { FooterComponent } from '../footer/footer.component';
     IonCardTitle,
     IonHeader,
     IonToolbar,
-    IonTitle
+    IonTitle,
+    IonButton,
+    IonButtons
   ]
 })
 export class MgComponent implements OnInit {
   private router = inject(Router);
   private favoritos = inject(FavoritosService);
+  public nav = inject(Navigation);
 
   recetas: RecetaFavorita[] = [];
 

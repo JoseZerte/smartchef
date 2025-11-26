@@ -4,16 +4,13 @@ import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import {
   IonButton,
-  IonCard,
-  IonCardContent,
-  IonCardHeader,
-  IonCardTitle,
   IonContent,
-  IonFooter,
   IonHeader,
   IonInput,
   IonTitle,
-  IonToolbar
+  IonToolbar,
+  IonFab,
+  IonFabButton
 } from '@ionic/angular/standalone';
 import { RecetaFavorita } from '../models/receta.model';
 
@@ -36,10 +33,8 @@ interface Coleccion {
     IonContent,
     IonButton,
     IonTitle,
-    IonCard,
-    IonCardHeader,
-    IonCardTitle,
-    IonCardContent
+    IonFab,
+    IonFabButton
   ]
 })
 export class SavesComponent implements OnInit {

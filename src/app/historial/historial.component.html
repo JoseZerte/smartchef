@@ -1,14 +1,29 @@
-<ion-header>
-
-
-
-
-
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>📅 Historial Semanal</ion-title>
+  </ion-toolbar>
 </ion-header>
 
-
-
-
-
-
-
+<ion-content>
+  @if (historial.length === 0) {
+    <div class="empty-state">
+      <p>🍽️ No has cocinado nada esta semana</p>
+      <p class="hint">Marca recetas como cocinadas desde su detalle</p>
+    </div>
+  } @else {
+    <ion-list>
+      @for (receta of historial; track receta.fecha) {
+        <ion-item>
+          <ion-thumbnail slot="start">
+            <img [src]="receta.imagen" [alt]="receta.nombre" />
+          </ion-thumbnail>
+          <ion-label>
+            <h2>{{ receta.nombre }}</h2>
+            <p>{{ formatearHora(receta.fecha) }}</p>
+          </ion-label>
+          <ion-badge slot="end" color="primary">{{ formatearFecha(receta.fecha) }}</ion-badge>
+        </ion-item>
+      }
+    </ion-list>
+  }
+</ion-content>

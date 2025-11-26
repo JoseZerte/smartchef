@@ -12,6 +12,10 @@
         <img ngSrc="assets/icon/bookmark-outline.svg" alt="Saves" height="16" width="16">
         <ion-label>Guardados</ion-label>
       </ion-tab-button>
+      <ion-tab-button (click)="nav.navigateWithAnimation('/carrito', $event)">
+        <span class="cart-icon">🛒</span>
+        <ion-label>Carrito</ion-label>
+      </ion-tab-button>
       <ion-tab-button (click)="nav.navigateWithAnimation('/historial', $event)">
         <img ngSrc="assets/icon/time-outline.svg" alt="History" height="16" width="16">
         <ion-label>Historial</ion-label>

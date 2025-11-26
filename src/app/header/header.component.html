@@ -2,21 +2,33 @@
 
   <div class="header-container">
 
-    <!-- Botón notificaciones -->
-    <ion-button fill="clear" class="icon-btn">
+    <!-- Botón filtros -->
+    <ion-button fill="clear" class="icon-btn" (click)="toggleFiltros()" [class.active]="mostrarFiltros">
       <img src="assets/icon/options-outline.svg" alt="filtro" fill/>
     </ion-button>
 
     <!-- Barra de búsqueda -->
-
-
     <ion-searchbar class="search-container" animated="true" placeholder="Buscar recetas"></ion-searchbar>
-
 
     <!-- Botón ajustes -->
     <ion-button fill="clear" class="icon-btn">
       <img src="assets/icon/settings-outline.svg" alt="configuración" fill/>
     </ion-button>
+  </div>
+
+  <!-- Panel de filtros -->
+  <div class="filtros-panel" [class.visible]="mostrarFiltros">
+    <div class="filtros-container">
+      @for (filtro of filtros; track filtro.tag) {
+        <button 
+          class="filtro-chip" 
+          [class.activo]="estaActivo(filtro.tag)"
+          (click)="toggleFiltro(filtro.tag)">
+          <span class="filtro-icon">{{ filtro.icon }}</span>
+          <span class="filtro-label">{{ filtro.label }}</span>
+        </button>
+      }
+    </div>
   </div>
 
 </ion-header>

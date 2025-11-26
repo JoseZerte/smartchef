@@ -41,5 +41,9 @@ export const routes: Routes = [
   {
     path: 'coleccion/:id',
     loadComponent: () => import('./paginacoleccion/paginacoleccion.page').then(m => m.PaginacoleccionPage)
+  },
+  {
+    path: 'carrito',
+    loadComponent: () => import('./carrito/carrito.component').then(m => m.CarritoComponent)
   }
 ];

@@ -30,7 +30,28 @@
       </ion-card-content>
     </ion-card>
 
-    <ion-button>Añadir ingredientes a la cesta</ion-button>
+    <div class="acciones">
+      <ion-button 
+        [color]="agregadoAlCarrito ? 'success' : 'primary'"
+        (click)="agregarAlCarrito()"
+        [disabled]="agregadoAlCarrito">
+        @if (agregadoAlCarrito) {
+          ✓ ¡Añadido al carrito!
+        } @else {
+          🛒 Añadir ingredientes a la cesta
+        }
+      </ion-button>
+      <ion-button 
+        [color]="cocinada ? 'success' : 'primary'" 
+        (click)="marcarCocinada()"
+        [disabled]="cocinada">
+        @if (cocinada) {
+          ✓ ¡Cocinada hoy!
+        } @else {
+          🍳 Marcar como cocinada
+        }
+      </ion-button>
+    </div>
   }
 </ion-content>
 

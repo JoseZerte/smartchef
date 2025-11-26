@@ -13,6 +13,7 @@ import {
 } from '@ionic/angular/standalone';
 import { ActivatedRoute } from '@angular/router';
 import { RecetaFavorita } from '../models/receta.model';
+import { Navigation } from '../services/navigation';
 
 interface Coleccion {
   nombre: string;
@@ -29,6 +30,7 @@ interface Coleccion {
 export class PaginacoleccionPage implements OnInit {
 
   private route = inject(ActivatedRoute);
+  public nav = inject(Navigation);
 
   coleccionIndex!: number;
   coleccion: Coleccion | null = null;

@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Receta } from '../models/receta.model';
+import { BehaviorSubject } from 'rxjs';
+import { Receta, TagReceta } from '../models/receta.model';
 
 @Injectable({
   providedIn: 'root'
@@ -23,7 +24,8 @@ export class RecetasService {
         '1 pizca de ajo en polvo',
         '1 cucharada sopera de perejil fresco',
         'Sal (al gusto)'
-      ]
+      ],
+      tags: ['rapido', 'economico']
     },
     {
       id: 2,
@@ -38,7 +40,8 @@ export class RecetasService {
         'Queso rallado',
         'Aceite de oliva',
         'Sal y pimienta'
-      ]
+      ],
+      tags: ['rapido', 'sin-gluten']
     },
     {
       id: 3,
@@ -58,7 +61,8 @@ export class RecetasService {
         '200 mililitros de agua',
         '5 cucharadas soperas de harina',
         '300 mililitros de aceite de oliva para freír'
-      ]
+      ],
+      tags: ['rapido', 'economico']
     },
     {
       id: 4,
@@ -78,7 +82,8 @@ export class RecetasService {
         'Camote',
         'Lechuga',
         'Cancha serrana chullpi c/n'
-      ]
+      ],
+      tags: ['sin-gluten', 'rapido']
     },
     {
       id: 5,
@@ -94,7 +99,8 @@ export class RecetasService {
         '1 hoja de laurel',
         '2 dientes de ajo',
         'Sal'
-      ]
+      ],
+      tags: ['sin-gluten', 'economico']
     },
     {
       id: 6,
@@ -115,7 +121,8 @@ export class RecetasService {
         '1 taza de mantequilla o margarina',
         '2 huevos',
         '½ taza de leche (120 mililitros)'
-      ]
+      ],
+      tags: ['vegetariano', 'economico']
     },
     {
       id: 7,
@@ -132,7 +139,8 @@ export class RecetasService {
         '1 cucharada sopera de levadura química (polvos de hornear)',
         '1 cucharada sopera de panela molida',
         '1 pizca de sal'
-      ]
+      ],
+      tags: ['vegetariano', 'rapido', 'economico']
     },
     {
       id: 8,
@@ -150,7 +158,8 @@ export class RecetasService {
         'Sal al gusto',
         'Mayonesa, mostaza, kétchup, salsa tártara, entre otras',
         'Cebolla frita c/n'
-      ]
+      ],
+      tags: ['sin-gluten', 'economico']
     },
     {
       id: 9,
@@ -168,9 +177,13 @@ export class RecetasService {
         '2 cucharadas soperas de aceite',
         'Sal y pimienta al gusto',
         'Tortillas de maíz o harina calientes'
-      ]
+      ],
+      tags: ['rapido', 'economico']
     }
   ];
+
+  private filtrosActivos = new BehaviorSubject<TagReceta[]>([]);
+  filtrosActivos$ = this.filtrosActivos.asObservable();
 
   obtenerTodas(): Receta[] {
     return [...this.recetas];
@@ -182,6 +195,35 @@ export class RecetasService {
 
   obtenerPorNombre(nombre: string): Receta | undefined {
     return this.recetas.find(r => r.nombre === nombre);
+  }
+
+  setFiltros(tags: TagReceta[]) {
+    this.filtrosActivos.next(tags);
+  }
+
+  getFiltros(): TagReceta[] {
+    return this.filtrosActivos.getValue();
+  }
+
+  toggleFiltro(tag: TagReceta) {
+    const filtros = this.filtrosActivos.getValue();
+    const index = filtros.indexOf(tag);
+    if (index > -1) {
+      filtros.splice(index, 1);
+    } else {
+      filtros.push(tag);
+    }
+    this.filtrosActivos.next([...filtros]);
+  }
+
+  obtenerFiltradas(): Receta[] {
+    const filtros = this.filtrosActivos.getValue();
+    if (filtros.length === 0) {
+      return [...this.recetas];
+    }
+    return this.recetas.filter(r => 
+      r.tags && filtros.some(f => r.tags!.includes(f))
+    );
   }
 }
 

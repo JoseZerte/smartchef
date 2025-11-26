@@ -1,6 +1,8 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { Navigation } from '../services/navigation';
 import { RecetasService } from '../services/recetas.service';
+import { HistorialService } from '../services/historial.service';
+import { CarritoService } from '../services/carrito.service';
 import { Receta } from '../models/receta.model';
 import {
   IonButton,
@@ -42,8 +44,12 @@ export class RecetaDetallePage implements OnInit {
   private route = inject(ActivatedRoute);
   private nav = inject(Navigation);
   private recetasService = inject(RecetasService);
+  private historialService = inject(HistorialService);
+  private carritoService = inject(CarritoService);
 
   recetaActual: Receta | undefined;
+  cocinada = false;
+  agregadoAlCarrito = false;
 
   ngOnInit(): void {
     const idParam = this.route.snapshot.paramMap.get('id');
@@ -61,5 +67,29 @@ export class RecetaDetallePage implements OnInit {
       icon.classList.remove('clicked');
       this.router.navigate([route]);
     });
+  }
+
+  marcarCocinada(): void {
+    if (this.recetaActual && !this.cocinada) {
+      this.historialService.marcarCocinada({
+        id: this.recetaActual.id,
+        nombre: this.recetaActual.nombre,
+        imagen: this.recetaActual.imagen
+      });
+      this.cocinada = true;
+    }
+  }
+
+  agregarAlCarrito(): void {
+    if (this.recetaActual && !this.agregadoAlCarrito) {
+      this.carritoService.agregarIngredientes(
+        this.recetaActual.ingredientes,
+        this.recetaActual.nombre
+      );
+      this.agregadoAlCarrito = true;
+      setTimeout(() => {
+        this.router.navigate(['/carrito']);
+      }, 500);
+    }
   }
 }
