@@ -19,11 +19,15 @@
         <div class="card-content">
           @if (!c.editando) {
             <h3 class="card-title">{{ c.nombre }}</h3>
-            <button class="btn-edit" (click)="editarNombre(c, $event)">✏️</button>
+            <div class="card-actions">
+              <button class="btn-edit" (click)="editarNombre(c, $event)">✏️</button>
+              <button class="btn-delete" (click)="eliminarColeccion(i, $event)">🗑️</button>
+            </div>
           } @else {
             <ion-input 
               [(ngModel)]="c.nombre" 
               (ionBlur)="guardarNombre(c)"
+              (click)="$event.stopPropagation()"
               class="input-edit">
             </ion-input>
           }

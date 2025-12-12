@@ -1,6 +1,20 @@
 import { Component, inject, OnInit } from '@angular/core';
-import {IonButton, IonContent, IonFooter, IonHeader, IonInput} from "@ionic/angular/standalone";
+import {
+  IonButton,
+  IonCard,
+  IonCardHeader,
+  IonCardSubtitle,
+  IonCardTitle,
+  IonChip,
+  IonContent,
+  IonIcon,
+  IonItem,
+  IonLabel,
+  IonList,
+  IonToggle
+} from "@ionic/angular/standalone";
 import { Navigation } from '../services/navigation';
+import {FooterComponent} from "../footer/footer.component";
 
 
 @Component({
@@ -9,9 +23,19 @@ import { Navigation } from '../services/navigation';
   styleUrls: ['./usuario.component.scss'],
   standalone: true,
   imports: [
-    IonInput,
+    IonList,
     IonButton,
     IonContent,
+    IonItem,
+    IonLabel,
+    IonIcon,
+    IonCard,
+    IonCardHeader,
+    IonCardTitle,
+    IonCardSubtitle,
+    IonChip,
+    IonToggle,
+    FooterComponent
   ]
 })
 export class UsuarioComponent  implements OnInit {

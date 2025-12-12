@@ -1,8 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { IonButton, IonHeader, IonSearchbar } from "@ionic/angular/standalone";
 import { RecetasService } from '../services/recetas.service';
 import { TagReceta } from '../models/receta.model';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-header',
@@ -18,6 +19,7 @@ import { TagReceta } from '../models/receta.model';
 })
 export class HeaderComponent {
   mostrarFiltros = false;
+  private router = inject(Router);
   
   filtros: { tag: TagReceta; label: string; icon: string }[] = [
     { tag: 'vegetariano', label: 'Vegetariano', icon: '🥬' },
@@ -38,5 +40,9 @@ export class HeaderComponent {
 
   estaActivo(tag: TagReceta): boolean {
     return this.recetasService.getFiltros().includes(tag);
+  }
+
+  irAjustes() {
+    this.router.navigate(['/configuracion']);
   }
 }

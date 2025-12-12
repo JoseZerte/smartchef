@@ -41,7 +41,6 @@ export class SavesComponent implements OnInit {
   private router = inject(Router);
 
   colecciones: Coleccion[] = [];
-  private contador = 1;
 
   ngOnInit(): void {
     this.cargarColecciones();
@@ -51,7 +50,6 @@ export class SavesComponent implements OnInit {
     const saved = localStorage.getItem('colecciones');
     if (saved) {
       this.colecciones = JSON.parse(saved);
-      this.contador = this.colecciones.length + 1;
     }
   }
 
@@ -60,12 +58,12 @@ export class SavesComponent implements OnInit {
   }
 
   agregarColeccion(): void {
+    const num = this.colecciones.length + 1;
     const nueva: Coleccion = {
-      nombre: 'Colección ' + this.contador,
+      nombre: 'Colección ' + num,
       recetas: []
     };
     this.colecciones = [...this.colecciones, nueva];
-    this.contador++;
     this.guardarColecciones();
   }
 
@@ -81,5 +79,11 @@ export class SavesComponent implements OnInit {
 
   abrirColeccion(index: number): void {
     this.router.navigate(['/coleccion', index]);
+  }
+
+  eliminarColeccion(index: number, event: Event): void {
+    event.stopPropagation();
+    this.colecciones.splice(index, 1);
+    this.guardarColecciones();
   }
 }

@@ -5,12 +5,16 @@ import { Routes } from '@angular/router';
 
 export const routes: Routes = [
   {
+    path: 'login',
+    loadComponent: () => import('./login/login.component').then((m) => m.LoginComponent),
+  },
+  {
     path: 'home',
     loadComponent: () => import('./home/home.page').then((m) => m.HomePage),
   },
   {
     path: '',
-    redirectTo: 'home',
+    redirectTo: 'login',
     pathMatch: 'full',
   },
 
@@ -45,5 +49,9 @@ export const routes: Routes = [
   {
     path: 'carrito',
     loadComponent: () => import('./carrito/carrito.component').then(m => m.CarritoComponent)
+  },
+  {
+    path: 'configuracion',
+    loadComponent: () => import('./configuracion/configuracion.component').then(m => m.ConfiguracionComponent)
   }
 ];
