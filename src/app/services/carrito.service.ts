@@ -1,11 +1,11 @@
-
 import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable, tap } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { ItemListaCompraDTO } from '../models/api.model';
 
+// 1. CORREGIDO: Añadimos 'id' para que no de error, pero usaremos el nombre para filtrar
 export interface ItemCarrito {
+  id: number;
   ingrediente: string;
   recetaNombre: string;
   comprado: boolean;
@@ -22,6 +22,7 @@ export class CarritoService {
   items$ = this.items.asObservable();
 
   private cargar(): ItemCarrito[] {
+
     const saved = localStorage.getItem('carrito');
     return saved ? JSON.parse(saved) : [];
   }
@@ -30,34 +31,60 @@ export class CarritoService {
     localStorage.setItem('carrito', JSON.stringify(this.items.getValue()));
   }
 
-
   generarListaCompraAPI(idReceta: number): Observable<ItemCarrito[]> {
-    const body = { idReceta };
+    const body = { recetaId: idReceta, usuarioId: 1 };
 
+    return this.http.post<any>(this.baseUrl, body).pipe(
+      map((respuestaBackend: any) => {
+        if (!respuestaBackend) return [];
 
-    return this.http.post<ItemListaCompraDTO[]>(this.baseUrl, body).pipe(
-      map((apiItems: ItemListaCompraDTO[]) => {
+        // Buscamos la lista de items donde sea que venga
+        const listaItems = respuestaBackend.items ||
+          respuestaBackend.itemsListaCompra ||
+          respuestaBackend.ingredientes || [];
 
-        return apiItems.map(item => ({
-          ingrediente: item.nombre,
-          recetaNombre: 'Generada por Receta',
-          comprado: false
-        }));
+        return listaItems.map((item: any) => {
+          // Lógica robusta para sacar el nombre
+          const nombreReal = item.ingrediente?.nombre || item.nombre || 'Ingrediente';
+          const cantidad = item.cantidad || '';
+          const unidad = item.unidad || '';
+
+          // Formato: "1 unidad Cebolla" (Evitamos poner "0" si no hay cantidad)
+          const parteCantidad = cantidad ? `${cantidad} ` : '';
+          const parteUnidad = unidad ? `${unidad} ` : '';
+          const ingredienteCompleto = `${parteCantidad}${parteUnidad}${nombreReal}`.trim();
+
+          return {
+            id: item.id || Date.now(), // ID temporal si falta
+            ingrediente: ingredienteCompleto,
+            recetaNombre: 'Receta Importada',
+            comprado: item.comprado || false
+          };
+        });
       }),
-      tap(nuevaLista => {
-        this.items.next(nuevaLista);
+      tap(nuevosItems => {
+        const listaActual = this.items.getValue();
+
+        // 2. CORREGIDO: Filtramos por NOMBRE (ingrediente) en vez de ID.
+        // Esto evita duplicados aunque el backend genere IDs nuevos.
+        const itemsAInsertar = nuevosItems.filter(nuevo =>
+          !listaActual.some(existente => existente.ingrediente === nuevo.ingrediente)
+        );
+
+        const listaFinal = [...listaActual, ...itemsAInsertar];
+
+        this.items.next(listaFinal);
         this.guardar();
       })
     );
   }
 
-
-
+  // Métodos auxiliares que ya tenías
   agregarIngredientes(ingredientes: string[], recetaNombre: string): void {
     const lista = this.items.getValue();
     ingredientes.forEach(ing => {
       if (!lista.some(i => i.ingrediente === ing)) {
-        lista.push({ ingrediente: ing, recetaNombre, comprado: false });
+        lista.push({ id: Date.now(), ingrediente: ing, recetaNombre, comprado: false });
       }
     });
     this.items.next(lista);
@@ -86,11 +113,6 @@ export class CarritoService {
     this.guardar();
   }
 
-  obtenerTodos(): ItemCarrito[] {
-    return this.items.getValue();
-  }
-
-  getCantidad(): number {
-    return this.items.getValue().filter(i => !i.comprado).length;
-  }
+  obtenerTodos(): ItemCarrito[] { return this.items.getValue(); }
+  getCantidad(): number { return this.items.getValue().filter(i => !i.comprado).length; }
 }

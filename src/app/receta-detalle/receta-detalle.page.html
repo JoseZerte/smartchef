@@ -6,16 +6,20 @@
       <ion-card-header class="cardheader">
         <ion-card-title class="cardtitle">{{ recetaActual.titulo }}</ion-card-title>
         <ion-card-subtitle class="cardsub">Dificultad: {{ recetaActual.dificultad }}</ion-card-subtitle>
-        <ion-card-subtitle class="cardsub">Tiempo de preparación: {{ recetaActual.tiempo_preparacion }}</ion-card-subtitle>
+        <ion-card-subtitle class="cardsub">Tiempo de preparación: {{ recetaActual.tiempoPreparacion }}</ion-card-subtitle>
       </ion-card-header>
 
       <ion-card-content class="cardcontent">
         <strong>Ingredientes:</strong>
         <ul>
-          <li *ngFor="let ri of recetaActual.ingredientesReceta">
-            {{ ri.cantidad }} {{ ri.unidad }} {{ ri.ingrediente.nombre }}
+          <li *ngFor="let ing of recetaActual.ingredientes">
+            {{ ing.cantidad }} {{ ing.unidad }} {{ ing.nombre }}
           </li>
         </ul>
+
+        <div *ngIf="!recetaActual.ingredientes || recetaActual.ingredientes.length === 0" style="color: red; font-style: italic; margin-top: 10px;">
+          ⚠️ No hay ingredientes registrados para esta receta.
+        </div>
       </ion-card-content>
     </ion-card>
 

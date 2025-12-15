@@ -91,8 +91,6 @@ export class RecetaDetallePage implements OnInit {
     });
   }
 
-
-
   agregarAlCarrito(): void {
     if (!this.recetaActual || this.agregadoAlCarrito) {
       return;
@@ -104,7 +102,7 @@ export class RecetaDetallePage implements OnInit {
         this.agregadoAlCarrito = true;
         console.log(`Lista de compra generada para receta ${this.recetaActual!.id}`);
 
-        // Navegamos al carrito después de un breve retraso visual
+
         setTimeout(() => {
           this.router.navigate(['/carrito']);
         }, 500);

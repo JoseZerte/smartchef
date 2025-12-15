@@ -12,11 +12,11 @@
     </div>
   } @else {
     <ion-list>
-      @for (item of items; track item.ingrediente; let i = $index) {
+      @for (item of items; track $index; let i = $index) {
         <ion-item-sliding>
           <ion-item [class.comprado]="item.comprado" (click)="toggleComprado(i)">
-            <ion-checkbox 
-              slot="start" 
+            <ion-checkbox
+              slot="start"
               [checked]="item.comprado"
               (ionChange)="toggleComprado(i)">
             </ion-checkbox>
@@ -43,4 +43,3 @@
     }
   }
 </ion-content>
-
