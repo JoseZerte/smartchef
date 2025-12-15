@@ -1,19 +1,25 @@
 <ion-content>
   <div class="cards-wrapper">
+    <ion-card
+      class="mini-card"
+      *ngFor="let item of itemsConLike$ | async"
+      (click)="navegarAReceta(item.id, $event)">
 
-    @for (item of itemsConLike; track item.id) {
-      <ion-card class="mini-card" (click)="navegarAReceta(item.id, $event)">
-        <div class="card-image-wrapper">
-          <img [alt]="item.nombre" [src]="item.imagen" />
-          <button class="like-btn" (click)="toggleLikeItem(item, $event)">
-            <img [src]="item.liked ? 'assets/icon/heartrelleno.svg' : 'assets/icon/heart-outline.svg'" alt="Heart">
-          </button>
-        </div>
-        <ion-card-header>
-          <ion-card-title>{{ item.nombre }}</ion-card-title>
-        </ion-card-header>
-      </ion-card>
-    }
+      <div class="card-image-wrapper">
+        <img [alt]="item.titulo" [src]="item.imagen" />
 
+        <ion-button class="like-btn" fill="clear" (click)="toggleLikeItem(item, $event)">
+          <img [src]="item.liked ? 'assets/icon/heartrelleno.svg' : 'assets/icon/heart-outline.svg'" alt="Heart">
+        </ion-button>
+      </div>
+
+      <ion-card-header>
+        <ion-card-title>{{ item.titulo }}</ion-card-title>
+      </ion-card-header>
+    </ion-card>
+
+    <div *ngIf="(itemsConLike$ | async)?.length === 0" class="empty-state">
+      <p>No se encontraron recetas con los filtros actuales o la API está vacía.</p>
+    </div>
   </div>
 </ion-content>

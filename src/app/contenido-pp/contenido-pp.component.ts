@@ -1,82 +1,85 @@
+
 import { Component, inject, OnInit, OnDestroy } from '@angular/core';
-import { IonCard, IonCardHeader, IonCardTitle, IonContent } from "@ionic/angular/standalone";
+import { IonCard, IonCardHeader, IonCardTitle, IonContent, IonButton } from "@ionic/angular/standalone";
 import { Router } from "@angular/router";
-import { Subscription } from 'rxjs';
+import { Subscription, combineLatest, Observable, of } from 'rxjs';
+import { switchMap, map } from 'rxjs/operators';
 import { Navigation } from '../services/navigation';
 import { FavoritosService } from '../services/favoritos';
 import { RecetasService } from '../services/recetas.service';
 import { Receta, RecetaFavorita } from '../models/receta.model';
+import { CommonModule } from '@angular/common';
+
+
+interface RecetaConLike extends Receta {
+  liked: boolean;
+}
 
 @Component({
   selector: 'app-contenido-pp',
   templateUrl: './contenido-pp.component.html',
   styleUrls: ['./contenido-pp.component.scss'],
   standalone: true,
-  imports: [IonCard, IonCardHeader, IonCardTitle, IonContent]
+  imports: [IonCard, IonCardHeader, IonCardTitle, IonContent, IonButton, CommonModule]
 })
 export class ContenidoPPComponent implements OnInit, OnDestroy {
 
   private router = inject(Router);
   public nav = inject(Navigation);
-  private favoritos = inject(FavoritosService);
+  private favoritosService = inject(FavoritosService);
   private recetasService = inject(RecetasService);
-  private filtrosSub?: Subscription;
 
-  recetas: Receta[] = [];
-  itemsConLike: RecetaFavorita[] = [];
+  private recetasSub?: Subscription;
+
+  // Observable que contendrá la lista final, combinada con el estado de Favoritos
+  itemsConLike$: Observable<RecetaConLike[]> = of([]);
 
   ngOnInit(): void {
-    this.actualizarRecetas();
-    
-    this.filtrosSub = this.recetasService.filtrosActivos$.subscribe(() => {
-      this.actualizarRecetas();
-    });
+
+    this.recetasService.buscarRecetasAPI().subscribe();
+
+
+    this.itemsConLike$ = combineLatest([
+      this.recetasService.recetas$,
+      this.favoritosService.favoritos$.pipe(
+        map(favs => new Set(favs.map(f => f.id)))
+      )
+    ]).pipe(
+
+      map(([recetas, favoritoIdsSet]) => {
+
+        return recetas.map(r => ({
+          ...r,
+          liked: favoritoIdsSet.has(r.id) // Comprobamos si el ID está en el Set
+        }));
+      })
+    );
+
+
+    this.recetasSub = this.itemsConLike$.subscribe();
   }
 
   ngOnDestroy(): void {
-    this.filtrosSub?.unsubscribe();
+    this.recetasSub?.unsubscribe();
   }
 
-  private actualizarRecetas(): void {
-    this.recetas = this.recetasService.obtenerFiltradas();
-    this.itemsConLike = this.recetas.map(r => ({
-      id: r.id,
-      nombre: r.nombre,
-      imagen: r.imagen,
-      liked: this.favoritos.estaFavorito(r.id)
-    }));
-  }
 
-  toggleLikeItem(item: RecetaFavorita, $event: Event): void {
+
+  toggleLikeItem(item: RecetaConLike, $event: Event): void {
     $event.stopPropagation();
-    item.liked = !item.liked;
 
-    const saved = localStorage.getItem('recetas');
-    const recetasGuardadas: RecetaFavorita[] = saved ? JSON.parse(saved) : [];
 
-    const index = recetasGuardadas.findIndex(r => r.id === item.id);
-    if (item.liked) {
-      if (index === -1) {
-        recetasGuardadas.push(item);
-      } else {
-        recetasGuardadas[index].liked = true;
-      }
-    } else {
-      if (index !== -1) {
-        recetasGuardadas.splice(index, 1);
-      }
-    }
+    this.favoritosService.marcarFavoritoAPI(item.id).subscribe({
+      next: () => {
 
-    localStorage.setItem('recetas', JSON.stringify(recetasGuardadas));
+      },
+      error: (err) => console.error('Error al marcar favorito:', err)
+    });
 
-    if (item.liked) {
-      this.favoritos.agregar(item);
-    } else {
-      this.favoritos.eliminar(item.id);
-    }
+
   }
 
   navegarAReceta(id: number, $event: Event): void {
-    this.nav.navigateWithAnimation('/receta-detalle/' + id, $event);
+    this.nav.navigateWithAnimation(`/receta-detalle/${id}`, $event);
   }
 }

@@ -2,7 +2,6 @@ import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { IonButton, IonHeader, IonSearchbar } from "@ionic/angular/standalone";
 import { RecetasService } from '../services/recetas.service';
-import { TagReceta } from '../models/receta.model';
 import { Router } from '@angular/router';
 
 @Component({
@@ -19,30 +18,30 @@ import { Router } from '@angular/router';
 })
 export class HeaderComponent {
   mostrarFiltros = false;
+
   private router = inject(Router);
-  
-  filtros: { tag: TagReceta; label: string; icon: string }[] = [
+  private recetasService = inject(RecetasService);
+
+  filtros: { tag: string; label: string; icon: string }[] = [
     { tag: 'vegetariano', label: 'Vegetariano', icon: '🥬' },
     { tag: 'sin-gluten', label: 'Sin Gluten', icon: '🌾' },
     { tag: 'rapido', label: 'Rápido', icon: '⚡' },
     { tag: 'economico', label: 'Económico', icon: '💰' }
   ];
 
-  constructor(public recetasService: RecetasService) {}
-
-  toggleFiltros() {
+  toggleFiltros(): void {
     this.mostrarFiltros = !this.mostrarFiltros;
   }
 
-  toggleFiltro(tag: TagReceta) {
+  toggleFiltro(tag: string): void {
     this.recetasService.toggleFiltro(tag);
   }
 
-  estaActivo(tag: TagReceta): boolean {
+  estaActivo(tag: string): boolean {
     return this.recetasService.getFiltros().includes(tag);
   }
 
-  irAjustes() {
+  irAjustes(): void {
     this.router.navigate(['/configuracion']);
   }
 }

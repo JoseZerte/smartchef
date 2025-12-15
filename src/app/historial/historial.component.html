@@ -1,29 +1,29 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>📅 Historial Semanal</ion-title>
-  </ion-toolbar>
-</ion-header>
-
 <ion-content>
-  @if (historial.length === 0) {
-    <div class="empty-state">
-      <p>🍽️ No has cocinado nada esta semana</p>
-      <p class="hint">Marca recetas como cocinadas desde su detalle</p>
+  <div class="cards-wrapper">
+    <ion-card
+      class="mini-card"
+      *ngFor="let item of historial$ | async"
+      (click)="navegarAReceta(item.id)"
+    >
+      <div class="card-image-wrapper">
+        <img [alt]="item.titulo" [src]="item.imagen" />
+
+        <button class="like-btn" (click)="toggleLikeItem(item, $event)">
+          <img
+            [src]="esFavorito(item.id) ? 'assets/icon/heartrelleno.svg' : 'assets/icon/heart-outline.svg'"
+            alt="Heart"
+          />
+        </button>
+
+      </div>
+      <ion-card-header>
+        <ion-card-title>{{ item.titulo }}</ion-card-title>
+        <ion-card-subtitle>{{ formatearFecha(item.fecha) }}</ion-card-subtitle>
+      </ion-card-header>
+    </ion-card>
+
+    <div *ngIf="(historial$ | async)?.length === 0" class="empty-state">
+      <p>Aún no has cocinado ninguna receta.</p>
     </div>
-  } @else {
-    <ion-list>
-      @for (receta of historial; track receta.fecha) {
-        <ion-item>
-          <ion-thumbnail slot="start">
-            <img [src]="receta.imagen" [alt]="receta.nombre" />
-          </ion-thumbnail>
-          <ion-label>
-            <h2>{{ receta.nombre }}</h2>
-            <p>{{ formatearHora(receta.fecha) }}</p>
-          </ion-label>
-          <ion-badge slot="end" color="primary">{{ formatearFecha(receta.fecha) }}</ion-badge>
-        </ion-item>
-      }
-    </ion-list>
-  }
+  </div>
 </ion-content>

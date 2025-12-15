@@ -1,5 +1,9 @@
-import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+
+import { Injectable, inject } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { BehaviorSubject, Observable, tap } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { ItemListaCompraDTO } from '../models/api.model';
 
 export interface ItemCarrito {
   ingrediente: string;
@@ -11,6 +15,9 @@ export interface ItemCarrito {
   providedIn: 'root'
 })
 export class CarritoService {
+  private http = inject(HttpClient);
+  private readonly baseUrl = 'http://localhost:8080/listas-compra';
+
   private items = new BehaviorSubject<ItemCarrito[]>(this.cargar());
   items$ = this.items.asObservable();
 
@@ -22,6 +29,29 @@ export class CarritoService {
   private guardar(): void {
     localStorage.setItem('carrito', JSON.stringify(this.items.getValue()));
   }
+
+
+  generarListaCompraAPI(idReceta: number): Observable<ItemCarrito[]> {
+    const body = { idReceta };
+
+
+    return this.http.post<ItemListaCompraDTO[]>(this.baseUrl, body).pipe(
+      map((apiItems: ItemListaCompraDTO[]) => {
+
+        return apiItems.map(item => ({
+          ingrediente: item.nombre,
+          recetaNombre: 'Generada por Receta',
+          comprado: false
+        }));
+      }),
+      tap(nuevaLista => {
+        this.items.next(nuevaLista);
+        this.guardar();
+      })
+    );
+  }
+
+
 
   agregarIngredientes(ingredientes: string[], recetaNombre: string): void {
     const lista = this.items.getValue();
@@ -64,4 +94,3 @@ export class CarritoService {
     return this.items.getValue().filter(i => !i.comprado).length;
   }
 }
-

@@ -1,24 +1,21 @@
+
 import { Component, inject, OnInit } from '@angular/core';
-import { Navigation } from '../services/navigation';
-import { RecetasService } from '../services/recetas.service';
-import { HistorialService } from '../services/historial.service';
-import { CarritoService } from '../services/carrito.service';
-import { Receta } from '../models/receta.model';
+import { CommonModule } from '@angular/common';
+import { ActivatedRoute, Router } from '@angular/router';
 import {
   IonButton,
-  IonButtons,
   IonCard,
   IonCardContent,
   IonCardHeader,
   IonCardSubtitle,
   IonCardTitle,
-  IonContent,
-  IonHeader,
-  IonTitle,
-  IonToolbar
+  IonContent
 } from '@ionic/angular/standalone';
-import { FooterComponent } from '../footer/footer.component';
-import { ActivatedRoute, Router } from '@angular/router';
+import { RecetasService } from '../services/recetas.service';
+import { HistorialService } from '../services/historial.service';
+import { CarritoService } from '../services/carrito.service';
+import { Navigation } from '../services/navigation';
+import { Receta } from '../models/receta.model';
 
 @Component({
   selector: 'app-receta-detalle',
@@ -26,17 +23,14 @@ import { ActivatedRoute, Router } from '@angular/router';
   styleUrls: ['./receta-detalle.page.scss'],
   standalone: true,
   imports: [
+    CommonModule,
     IonContent,
-    IonHeader,
-    IonTitle,
-    IonToolbar,
     IonCard,
     IonCardHeader,
     IonCardTitle,
     IonCardSubtitle,
     IonCardContent,
     IonButton,
-    IonButtons
   ]
 })
 export class RecetaDetallePage implements OnInit {
@@ -47,49 +41,83 @@ export class RecetaDetallePage implements OnInit {
   private historialService = inject(HistorialService);
   private carritoService = inject(CarritoService);
 
-  recetaActual: Receta | undefined;
+  recetaActual?: Receta;
   cocinada = false;
   agregadoAlCarrito = false;
+  cargando = true;
+  errorMensaje: string | null = null;
 
   ngOnInit(): void {
     const idParam = this.route.snapshot.paramMap.get('id');
-    if (idParam) {
-      const id = parseInt(idParam, 10);
-      this.recetaActual = this.recetasService.obtenerPorId(id);
+    if (!idParam) {
+      this.errorMensaje = 'ID de receta no válido';
+      this.cargando = false;
+      return;
     }
-  }
 
-  navigateWithAnimation(route: string, $event: Event): void {
-    const icon = $event.target as HTMLElement;
-    icon.classList.add('clicked');
+    const id = parseInt(idParam, 10);
+    // REQ 4: Obtener la receta por ID desde la API
+    this.recetasService.obtenerPorId(id).subscribe({
+      next: receta => {
+        this.recetaActual = receta;
+        this.errorMensaje = null;
+        this.cargando = false;
 
-    setTimeout(() => {
-      icon.classList.remove('clicked');
-      this.router.navigate([route]);
+      },
+      error: err => {
+        this.recetaActual = undefined;
+        this.errorMensaje = err.status === 404 ? 'Receta no encontrada' : 'Ocurrió un error al cargar la receta';
+        this.cargando = false;
+      }
     });
   }
 
+
   marcarCocinada(): void {
-    if (this.recetaActual && !this.cocinada) {
-      this.historialService.marcarCocinada({
-        id: this.recetaActual.id,
-        nombre: this.recetaActual.nombre,
-        imagen: this.recetaActual.imagen
-      });
-      this.cocinada = true;
+    if (!this.recetaActual || this.cocinada) {
+      return;
     }
+
+
+    this.historialService.registrarComidaAPI(this.recetaActual.id).subscribe({
+      next: () => {
+        this.cocinada = true;
+        console.log(`Receta ${this.recetaActual!.id} registrada como cocinada.`);
+      },
+      error: (err) => {
+        console.error('Error al registrar cocinado en API:', err);
+
+      }
+    });
   }
 
+
+
   agregarAlCarrito(): void {
-    if (this.recetaActual && !this.agregadoAlCarrito) {
-      this.carritoService.agregarIngredientes(
-        this.recetaActual.ingredientes,
-        this.recetaActual.nombre
-      );
-      this.agregadoAlCarrito = true;
-      setTimeout(() => {
-        this.router.navigate(['/carrito']);
-      }, 500);
+    if (!this.recetaActual || this.agregadoAlCarrito) {
+      return;
     }
+
+
+    this.carritoService.generarListaCompraAPI(this.recetaActual.id).subscribe({
+      next: () => {
+        this.agregadoAlCarrito = true;
+        console.log(`Lista de compra generada para receta ${this.recetaActual!.id}`);
+
+        // Navegamos al carrito después de un breve retraso visual
+        setTimeout(() => {
+          this.router.navigate(['/carrito']);
+        }, 500);
+      },
+      error: (err) => {
+        console.error('Error al generar lista de compra en API:', err);
+        // Opcional: Mostrar error al usuario
+      }
+    });
+  }
+
+
+  navigateWithAnimation(route: string, $event: Event): void {
+
   }
 }

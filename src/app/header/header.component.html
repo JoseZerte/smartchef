@@ -8,7 +8,7 @@
     </ion-button>
 
     <!-- Barra de búsqueda -->
-    <ion-searchbar class="search-container" animated="true" placeholder="Buscar recetas"></ion-searchbar>
+    <ion-searchbar class="search-container" [animated]="true" placeholder="Buscar recetas"></ion-searchbar>
 
     <!-- Botón ajustes -->
     <ion-button fill="clear" class="icon-btn" (click)="irAjustes()">
@@ -20,8 +20,8 @@
   <div class="filtros-panel" [class.visible]="mostrarFiltros">
     <div class="filtros-container">
       @for (filtro of filtros; track filtro.tag) {
-        <button 
-          class="filtro-chip" 
+        <button
+          class="filtro-chip"
           [class.activo]="estaActivo(filtro.tag)"
           (click)="toggleFiltro(filtro.tag)">
           <span class="filtro-icon">{{ filtro.icon }}</span>
