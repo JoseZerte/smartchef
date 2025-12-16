@@ -1,3 +1,31 @@
+
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Detalle</ion-title>
+
+    <ion-buttons slot="end">
+      <ion-button (click)="editar()">
+        ✏️
+      </ion-button>
+      <ion-button color="danger" (click)="borrar()">
+        🗑️
+      </ion-button>
+    </ion-buttons>
+
+  </ion-toolbar>
+</ion-header>
+
+
+
+
+
+
+
+
+
 <ion-content>
   <ng-container *ngIf="recetaActual">
     <ion-card class="card">

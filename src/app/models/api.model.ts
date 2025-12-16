@@ -61,6 +61,7 @@ export interface RecetaCreacionDTO {
   categoriaId: number;
 
   ingredientes: IngredienteDTO[];
+  pasos: string[];
 }
 
 

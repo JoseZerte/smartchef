@@ -40,20 +40,32 @@ export class RecetasService {
 
 
   public buscarRecetasAPI(filtros?: string[]): Observable<Receta[]> {
-
-
     const filtrosAUsar = filtros || [];
-
     let params = new HttpParams();
 
-    if (filtrosAUsar.length > 0) {
+    // --- TRADUCTOR DE FILTROS ---
 
-      params = params.set('filtros', filtrosAUsar.join(','));
+    // 1. Si el usuario pulsa 'Vegetariano'
+    if (filtrosAUsar.includes('Vegetariano')) {
+      params = params.set('preferencia', 'Vegana'); // <--- Enviamos lo que Java espera
+    }
 
+    // 2. Si el usuario pulsa 'Sin Gluten'
+    if (filtrosAUsar.includes('Sin Gluten')) {
+      params = params.set('preferencia', 'Sin Gluten');
+    }
+
+    // (Opcional) Si en el futuro implementas filtro por tiempo en Java:
+    // if (filtrosAUsar.includes('Rápido')) { params = params.set('maxTiempo', '30'); }
+
+    // ----------------------------
+
+    // Si hay parámetros, los enviamos
+    if (params.keys().length > 0) {
       return this.http.get<Receta[]>(this.baseUrl, { params });
     }
 
-
+    // Si no hay filtros activos, pedimos todas
     return this.http.get<Receta[]>(this.baseUrl);
   }
 
@@ -94,6 +106,27 @@ export class RecetasService {
   getFiltros(): string[] {
     return this.filtrosActivos.getValue();
   }
+
+
+  recargarRecetas() {
+    const filtrosActuales = this.filtrosActivos.getValue();
+    this.buscarRecetasAPI(filtrosActuales).subscribe(nuevasRecetas => {
+      // 🚨 ESTA ES LA CLAVE: Empujamos los datos nuevos para que todos los componentes se enteren
+      this.recetasSubject.next(nuevasRecetas);
+    });
+  }
+
+  borrarReceta(id: number): Observable<any> {
+    return this.http.delete(`${this.baseUrl}/${id}`);
+  }
+
+  // 2. EDITAR (PUT)
+  actualizarReceta(id: number, receta: any): Observable<any> {
+    return this.http.put(`${this.baseUrl}/${id}`, receta);
+  }
+
+
+
 
 
 }
