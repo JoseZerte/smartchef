@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
 import {
   IonHeader, IonContent, IonFab, IonFabButton,
-  ModalController // <--- 1. Lo traemos de 'standalone' para que no falle
+  ModalController
 } from '@ionic/angular/standalone';
 import { ContenidoPPComponent } from "../contenido-pp/contenido-pp.component";
 import { HeaderComponent } from "../header/header.component";
@@ -15,7 +15,7 @@ import { RecetasService } from '../services/recetas.service';
   standalone: true,
   imports: [
     IonHeader, IonContent, IonFab, IonFabButton,
-    ContenidoPPComponent, HeaderComponent // RouterLink no hace falta ya
+    ContenidoPPComponent, HeaderComponent
   ],
 })
 export class HomePage {
@@ -34,7 +34,7 @@ export class HomePage {
 
     // Escuchar cuando se cierra el modal
     modal.onDidDismiss().then((data) => {
-      // Si el modal dice que ha creado algo ('creado'), podríamos recargar la lista
+
       if (data.role === 'creado') {
         console.log('✅ Receta creada, recargando...');
 
