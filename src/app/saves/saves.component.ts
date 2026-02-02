@@ -31,7 +31,6 @@ interface Coleccion {
     IonHeader,
     IonToolbar,
     IonContent,
-    IonButton,
     IonTitle,
     IonFab,
     IonFabButton
