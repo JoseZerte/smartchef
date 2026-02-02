@@ -1,137 +1,50 @@
-
-<ion-content class="profile-content" fullscreen>
+<ion-content class="profile-content" [fullscreen]="true">
   <div class="profile-hero">
     <div class="status-pill">
-      <ion-icon name="checkmark-circle-outline"></ion-icon>
-      Sesión activa
+      <ion-icon name="checkmark-circle-outline"></ion-icon> Sesión activa
     </div>
-
     <div class="avatar-wrapper">
       <img src="https://placekitten.com/200/200" alt="Foto de perfil" />
       <ion-button size="small" fill="outline" class="change-photo-btn">
-        <ion-icon slot="start" name="camera-outline"></ion-icon>
-        Cambiar foto
+        <ion-icon slot="start" name="camera-outline"></ion-icon> Cambiar foto
       </ion-button>
     </div>
-
     <div class="profile-name">
       <h1>Hola, Jose Zerte</h1>
       <p>Cuenta personal · ID #SC-2048</p>
     </div>
-
     <div class="quick-actions">
-      <ion-chip outline>
-        <ion-icon name="pencil-outline"></ion-icon>
-        <ion-label>Editar nombre</ion-label>
-      </ion-chip>
-      <ion-chip outline>
-        <ion-icon name="globe-outline"></ion-icon>
-        <ion-label>Idioma</ion-label>
-      </ion-chip>
-      <ion-chip outline>
-        <ion-icon name="notifications-outline"></ion-icon>
-        <ion-label>Alertas</ion-label>
-      </ion-chip>
+      <ion-chip [outline]="true"><ion-icon name="pencil-outline"></ion-icon><ion-label>Editar</ion-label></ion-chip>
+      <ion-chip [outline]="true"><ion-icon name="globe-outline"></ion-icon><ion-label>Idioma</ion-label></ion-chip>
+      <ion-chip [outline]="true"><ion-icon name="notifications-outline"></ion-icon><ion-label>Alertas</ion-label></ion-chip>
     </div>
   </div>
 
   <ion-card class="card-section">
-    <ion-card-header>
-      <ion-card-title>Perfil</ion-card-title>
-      <ion-card-subtitle>Información visible en tu cuenta</ion-card-subtitle>
-    </ion-card-header>
-
     <ion-list lines="full">
       <ion-item>
         <ion-icon slot="start" name="person-outline"></ion-icon>
-        <ion-label>
-          <h2>Nombre</h2>
-          <p>Jose Zerte</p>
-        </ion-label>
-        <ion-button slot="end" size="small" fill="clear">Editar</ion-button>
+        <ion-label><h2>Nombre</h2><p>Jose Zerte</p></ion-label>
       </ion-item>
-
       <ion-item>
         <ion-icon slot="start" name="mail-unread-outline"></ion-icon>
-        <ion-label>
-          <h2>Correo</h2>
-          <p>JoseZerte@smartchef.app</p>
-        </ion-label>
-      </ion-item>
-
-      <ion-item>
-        <ion-icon slot="start" name="language-outline"></ion-icon>
-        <ion-label>
-          <h2>Idioma</h2>
-          <p>Español (ES)</p>
-        </ion-label>
-        <ion-button slot="end" size="small" fill="clear">Cambiar</ion-button>
+        <ion-label><h2>Correo</h2><p>{{ 'JoseZerte@smartchef.app' }}</p></ion-label>
       </ion-item>
     </ion-list>
   </ion-card>
 
   <ion-card class="card-section">
-    <ion-card-header>
-      <ion-card-title>Preferencias</ion-card-title>
-      <ion-card-subtitle>Controla cómo quieres usar SmartChef</ion-card-subtitle>
-    </ion-card-header>
-
     <ion-list lines="full">
       <ion-item>
         <ion-icon slot="start" name="notifications-outline"></ion-icon>
-        <ion-label>
-          <h2>Notificaciones</h2>
-          <p>Recibir alertas de recetas y recordatorios</p>
-        </ion-label>
-        <ion-toggle slot="end" checked></ion-toggle>
-      </ion-item>
-
-      <ion-item>
-        <ion-icon slot="start" name="moon-outline"></ion-icon>
-        <ion-label>
-          <h2>Modo oscuro</h2>
-          <p>Usar tema oscuro automáticamente</p>
-        </ion-label>
-        <ion-toggle slot="end"></ion-toggle>
-      </ion-item>
-
-      <ion-item>
-        <ion-icon slot="start" name="lock-closed-outline"></ion-icon>
-        <ion-label>
-          <h2>Seguridad</h2>
-          <p>Contraseña y verificación en dos pasos</p>
-        </ion-label>
-        <ion-button slot="end" size="small" fill="clear">Configurar</ion-button>
+        <ion-label><h2>Notificaciones</h2></ion-label>
+        <ion-toggle slot="end" [checked]="true"></ion-toggle>
       </ion-item>
     </ion-list>
-  </ion-card>
-
-  <ion-card class="card-section">
-    <ion-card-header>
-      <ion-card-title>Actividad</ion-card-title>
-      <ion-card-subtitle>Resumen rápido de tu sesión</ion-card-subtitle>
-    </ion-card-header>
-
-    <div class="activity-grid">
-      <div class="activity-card">
-        <span class="label">Último acceso</span>
-        <strong>Hoy · 10:24</strong>
-      </div>
-      <div class="activity-card">
-        <span class="label">Sesiones activas</span>
-        <strong>2 dispositivos</strong>
-      </div>
-      <div class="activity-card">
-        <span class="label">Plan</span>
-        <strong>SmartChef Plus</strong>
-      </div>
-    </div>
   </ion-card>
 
   <div class="footer-actions">
     <ion-button expand="block" color="primary">Guardar cambios</ion-button>
-    <ion-button expand="block" fill="outline" color="medium">Cerrar sesión</ion-button>
   </div>
 </ion-content>
-
 <app-footer></app-footer>
