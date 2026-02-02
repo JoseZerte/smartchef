@@ -1,19 +1,11 @@
 {
   "/api": {
-
-    "target": "https://smartchefe.onrender.com/",
-    "secure": false,
-    "changeOrigin" : true,
-    "pathRewrite": { "^/api": ""},
+    "target": "https://smartchefe.onrender.com",
+    "secure": true,
+    "changeOrigin": true,
+    "pathRewrite": {
+      "^/api": ""
+    },
     "logLevel": "debug"
-
-
-
-
   }
-
-
-
-
-
 }
