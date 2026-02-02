@@ -4,10 +4,7 @@ import { Routes } from '@angular/router';
 
 
 export const routes: Routes = [
-  {
-    path: 'login',
-    loadComponent: () => import('./login/login.component').then((m) => m.LoginComponent),
-  },
+
   {
     path: 'home',
     loadComponent: () => import('./home/home.page').then((m) => m.HomePage),
@@ -50,12 +47,6 @@ export const routes: Routes = [
     path: 'carrito',
     loadComponent: () => import('./carrito/carrito.component').then(m => m.CarritoComponent)
   },
-  {
-    path: 'configuracion',
-    loadComponent: () => import('./configuracion/configuracion.component').then(m => m.ConfiguracionComponent)
-  },  {
-    path: 'crear-receta',
-    loadComponent: () => import('./crear-receta/crear-receta.page').then( m => m.CrearRecetaPage)
-  }
+
 
 ];
