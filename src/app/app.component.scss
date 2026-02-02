@@ -1,0 +1,97 @@
+/* Estilo base global para toda la app */
+:host, ion-app {
+  font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
+  color: #1f2a44;
+  background: #f5f7fb;
+}
+
+ion-content {
+  --background: #f5f7fb;
+}
+
+/* Barras superiores más limpias */
+ion-header, ion-toolbar {
+  --background: #ffffff;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.06);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.04);
+}
+
+/* Tarjetas globales */
+ion-card {
+  background: #ffffff;
+  border-radius: 18px;
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+  border: 1px solid rgba(0, 0, 0, 0.04);
+  overflow: hidden;
+
+  ion-card-header {
+    padding-bottom: 4px;
+  }
+
+  ion-card-title {
+    font-weight: 700;
+    color: #1f2a44;
+  }
+
+  ion-card-subtitle {
+    color: #6b7280;
+    font-weight: 500;
+  }
+}
+
+/* Botones primarios con gradiente */
+ion-button {
+  --border-radius: 12px;
+  --background: linear-gradient(135deg, #ff6b6b 0%, #ff8e53 100%);
+  --box-shadow: 0 8px 22px rgba(255, 107, 107, 0.35);
+  font-weight: 600;
+
+  &.ion-color-secondary {
+    --background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
+  }
+}
+
+/* Inputs */
+ion-input, ion-searchbar {
+  --background: #ffffff;
+  --color: #1f2a44;
+  --placeholder-color: #9ca3af;
+  --border-radius: 14px;
+  --box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
+  --padding-start: 12px;
+  --padding-end: 12px;
+}
+
+/* Items y listas */
+ion-list {
+  background: transparent;
+}
+
+ion-item {
+  --background: #ffffff;
+  --border-radius: 14px;
+  --padding-start: 14px;
+  --padding-end: 14px;
+  margin: 6px 0;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.05);
+}
+
+/* Tipografía general */
+h1, h2, h3, h4, h5, h6 {
+  color: #111827;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+p, span, ion-label {
+  color: #4b5563;
+}
+
+/* Contenedor de página para centrar contenido si se necesita */
+.page-container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 16px 16px;
+}
+

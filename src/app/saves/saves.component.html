@@ -1,48 +1,52 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>Colecciones</ion-title>
+    <ion-title>📚 Mis Colecciones</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-
-  <div class="agregar-coleccion">
-    <ion-button (click)="agregarColeccion()" class="anadir">
-      <img class="icon" src="assets/icon/add-outline.svg" alt="añadir">
-    </ion-button>
-    <span class="texto-boton"><strong>Agregar colección</strong></span>
-  </div>
-
+  @if (colecciones.length === 0) {
+    <div class="empty-state">
+      <p>📂 No tienes colecciones</p>
+      <span>Crea tu primera colección</span>
+    </div>
+  }
 
   <div class="grid-container">
-    <div *ngFor="let c of colecciones; let i = index">
-      <ion-card (click)="abrirColeccion(i)">
-        <ion-card-header>
-          <ion-card-title>
-            <ng-container *ngIf="!c.editando; else editando">
-              {{ c.nombre }}
-              <ion-button fill="clear" size="small" (click)="editarNombre(c, $event)">
-                ✏️
-              </ion-button>
-            </ng-container>
-
-            <ng-template #editando>
-              <ion-input [(ngModel)]="c.nombre" (ionBlur)="guardarNombre(c)"></ion-input>
-            </ng-template>
-          </ion-card-title>
-        </ion-card-header>
-
-        <ion-card-content>
-          {{ c.recetas.length ? c.recetas.length + ' recetas' : 'No hay recetas todavía' }}
-        </ion-card-content>
-      </ion-card>
-    </div>
+    @for (c of colecciones; track $index; let i = $index) {
+      <div class="coleccion-card" (click)="abrirColeccion(i)">
+        <div class="card-icon">📁</div>
+        <div class="card-content">
+          @if (!c.editando) {
+            <h3 class="card-title">{{ c.nombre }}</h3>
+            <div class="card-actions">
+              <button class="btn-edit" (click)="editarNombre(c, $event)">✏️</button>
+              <button class="btn-delete" (click)="eliminarColeccion(i, $event)">🗑️</button>
+            </div>
+          } @else {
+            <ion-input 
+              [(ngModel)]="c.nombre" 
+              (ionBlur)="guardarNombre(c)"
+              (click)="$event.stopPropagation()"
+              class="input-edit">
+            </ion-input>
+          }
+        </div>
+        <p class="card-count">
+          @if (c.recetas.length) {
+            {{ c.recetas.length }} receta{{ c.recetas.length > 1 ? 's' : '' }}
+          } @else {
+            Vacía
+          }
+        </p>
+      </div>
+    }
   </div>
 </ion-content>
 
-<ion-footer>
-
-  <app-footer></app-footer>
-
-</ion-footer>
-
+<!-- FAB para agregar -->
+<ion-fab slot="fixed" vertical="bottom" horizontal="end">
+  <ion-fab-button (click)="agregarColeccion()">
+    <span class="fab-icon">+</span>
+  </ion-fab-button>
+</ion-fab>

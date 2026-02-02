@@ -1,28 +1,24 @@
-import { Component, OnInit } from '@angular/core';
-import {FooterComponent} from "../footer/footer.component";
-import { CommonModule } from '@angular/common';
+import { Component, OnInit, inject } from '@angular/core';
+import { FooterComponent } from '../footer/footer.component';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
-import { inject } from '@angular/core';
 import {
   IonButton,
-  IonButtons, IonCard, IonCardContent, IonCardHeader, IonCardTitle,
   IonContent,
-  IonFooter,
-  IonHeader, IonInput, IonItem, IonModal, IonSearchbar,
-  IonText,
+  IonHeader,
+  IonInput,
   IonTitle,
-  IonToolbar
-} from "@ionic/angular/standalone";
-
-
+  IonToolbar,
+  IonFab,
+  IonFabButton
+} from '@ionic/angular/standalone';
+import { RecetaFavorita } from '../models/receta.model';
 
 interface Coleccion {
   nombre: string;
-  recetas: any[];
+  recetas: RecetaFavorita[];
   editando?: boolean;
 }
-
 
 @Component({
   selector: 'app-saves',
@@ -32,59 +28,62 @@ interface Coleccion {
   imports: [
     FormsModule,
     IonInput,
-    CommonModule,
-    FooterComponent,
-    IonFooter,
     IonHeader,
     IonToolbar,
     IonContent,
     IonButton,
     IonTitle,
-    IonCard,
-    IonCardHeader,
-    IonCardTitle,
-    IonCardContent,
-
+    IonFab,
+    IonFabButton
   ]
 })
-export class SavesComponent implements OnInit{
-
-  ngOnInit() {
-    const saved = localStorage.getItem('colecciones');
-    this.colecciones = saved ? JSON.parse(saved) : [];
-
-    // actualizamos contador
-    this.contador = this.colecciones.length + 1;
-  }
-
+export class SavesComponent implements OnInit {
   private router = inject(Router);
 
   colecciones: Coleccion[] = [];
-  contador = 1;
 
-  agregarColeccion() {
-    const nueva: Coleccion = {
-      nombre: 'Colección ' + this.contador,
-      recetas: []
-    };
-    this.colecciones = [...this.colecciones, nueva];
-    this.contador++;
+  ngOnInit(): void {
+    this.cargarColecciones();
+  }
 
-    // 🔥 Guardar en localStorage
+  private cargarColecciones(): void {
+    const saved = localStorage.getItem('colecciones');
+    if (saved) {
+      this.colecciones = JSON.parse(saved);
+    }
+  }
+
+  private guardarColecciones(): void {
     localStorage.setItem('colecciones', JSON.stringify(this.colecciones));
   }
 
-  editarNombre(c: Coleccion, event: Event) {
-    event.stopPropagation(); // evita abrir la colección al hacer click
+  agregarColeccion(): void {
+    const num = this.colecciones.length + 1;
+    const nueva: Coleccion = {
+      nombre: 'Colección ' + num,
+      recetas: []
+    };
+    this.colecciones = [...this.colecciones, nueva];
+    this.guardarColecciones();
+  }
+
+  editarNombre(c: Coleccion, event: Event): void {
+    event.stopPropagation();
     c.editando = true;
   }
 
-  guardarNombre(c: Coleccion) {
+  guardarNombre(c: Coleccion): void {
     c.editando = false;
+    this.guardarColecciones();
   }
 
-  abrirColeccion(index: number) {
+  abrirColeccion(index: number): void {
     this.router.navigate(['/coleccion', index]);
   }
-}
 
+  eliminarColeccion(index: number, event: Event): void {
+    event.stopPropagation();
+    this.colecciones.splice(index, 1);
+    this.guardarColecciones();
+  }
+}

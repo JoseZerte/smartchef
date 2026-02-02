@@ -1,107 +1,81 @@
-import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component, OnInit, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { navigate } from 'ionicons/icons';
-import { Navigation } from '../services/navigation';
-import { Router } from '@angular/router';
 import {
   IonButton, IonButtons,
   IonContent,
   IonHeader,
-  IonItem, IonLabel,
+  IonItem,
+  IonLabel,
   IonList,
   IonThumbnail,
   IonTitle,
   IonToolbar
 } from '@ionic/angular/standalone';
-import { inject } from '@angular/core';
-import {ActivatedRoute} from "@angular/router";
-import {FooterComponent} from "../footer/footer.component";
+import { ActivatedRoute } from '@angular/router';
+import { RecetaFavorita } from '../models/receta.model';
+import { Navigation } from '../services/navigation';
+
+interface Coleccion {
+  nombre: string;
+  recetas: RecetaFavorita[];
+}
 
 @Component({
   selector: 'app-paginacoleccion',
   templateUrl: './paginacoleccion.page.html',
   styleUrls: ['./paginacoleccion.page.scss'],
   standalone: true,
-  imports: [IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule, IonButton, IonList, IonItem, IonThumbnail, IonLabel, IonButtons]
+  imports: [IonContent, IonHeader, IonTitle, IonToolbar, FormsModule, IonButton, IonList, IonItem, IonThumbnail, IonLabel, IonButtons]
 })
 export class PaginacoleccionPage implements OnInit {
 
   private route = inject(ActivatedRoute);
-  private router = inject(Router);
-  protected readonly navigate = navigate;
-  private nav = inject(Navigation);
+  public nav = inject(Navigation);
 
   coleccionIndex!: number;
-  coleccion: any;
+  coleccion: Coleccion | null = null;
+  recetasLike: RecetaFavorita[] = [];
 
-  recetasLike: any[] = [];
-
-
-  ngOnInit() {
-
+  ngOnInit(): void {
     this.coleccionIndex = Number(this.route.snapshot.paramMap.get('id'));
 
     // Cargar colecciones
     const saved = localStorage.getItem('colecciones');
-    const colecciones = saved ? JSON.parse(saved) : [];
-    this.coleccion = colecciones[this.coleccionIndex];
+    const colecciones: Coleccion[] = saved ? JSON.parse(saved) : [];
+    this.coleccion = colecciones[this.coleccionIndex] ?? null;
 
-    // Cargar recetas like
+    // Cargar recetas liked dinámicamente
     const savedRecetas = localStorage.getItem('recetas');
-    const todasRecetas = savedRecetas ? JSON.parse(savedRecetas) : [];
+    const todasRecetas: RecetaFavorita[] = savedRecetas ? JSON.parse(savedRecetas) : [];
 
-    // Filtrar solo las recetas que están like
-
-    this.recetasLike = todasRecetas.filter((r: any) => r.liked);
+    // Filtrar solo las recetas que están liked
+    this.recetasLike = todasRecetas.filter(r => r.liked);
   }
 
-  agregarReceta(receta: any) {
-    // ⚡ Si la receta no tiene id, la asignamos (por si acaso)
-    if (!receta.id) {
-      receta.id = new Date().getTime(); // id único basado en timestamp
-    }
+  estaEnColeccion(receta: RecetaFavorita): boolean {
+    if (!this.coleccion) return false;
+    return this.coleccion.recetas.some(r => r.id === receta.id);
+  }
 
-    // 1️⃣ Evitar duplicados
-    const yaExiste = this.coleccion.recetas.some((r: any) => r.id === receta.id);
-    if (yaExiste) return;
+  agregarReceta(receta: RecetaFavorita): void {
+    if (!this.coleccion || this.estaEnColeccion(receta)) return;
 
-    // 2️⃣ Añadir receta
     this.coleccion.recetas.push(receta);
+    this.guardarColecciones();
+  }
 
-    // 3️⃣ Guardar en localStorage
+  quitarReceta(receta: RecetaFavorita): void {
+    if (!this.coleccion) return;
+
+    this.coleccion.recetas = this.coleccion.recetas.filter(r => r.id !== receta.id);
+    this.guardarColecciones();
+  }
+
+  private guardarColecciones(): void {
     const saved = localStorage.getItem('colecciones');
-    const colecciones = saved ? JSON.parse(saved) : [];
-    colecciones[this.coleccionIndex] = this.coleccion;
+    const colecciones: Coleccion[] = saved ? JSON.parse(saved) : [];
+
+    colecciones[this.coleccionIndex] = this.coleccion!;
     localStorage.setItem('colecciones', JSON.stringify(colecciones));
   }
-
-  quitarReceta(receta: any) {
-    // ⚡ Evitamos borrar todo si id no está definido
-    if (!receta.id) return;
-
-    // 1️⃣ Filtramos solo la receta que queremos eliminar
-    this.coleccion.recetas = this.coleccion.recetas.filter((r: any) => r.id !== receta.id);
-
-    // 2️⃣ Guardamos cambios en localStorage
-    const saved = localStorage.getItem('colecciones');
-    const colecciones = saved ? JSON.parse(saved) : [];
-    colecciones[this.coleccionIndex] = this.coleccion;
-    localStorage.setItem('colecciones', JSON.stringify(colecciones));
-  }
-
-
-  navigateWithAnimation(route: string, $event: any) {
-    const icon = $event.target;
-    icon.classList.add('clicked');
-
-    setTimeout(() => {
-      icon.classList.remove('clicked');
-      this.router.navigate([route]);
-    });
-
-
-  }
-
-
 }

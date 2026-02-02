@@ -1,24 +1,27 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
-import { navigate } from 'ionicons/icons';
-import { Navigation } from '../services/navigation';
+import { ActivatedRoute, Router } from '@angular/router';
 import {
   IonButton,
-  IonButtons,
   IonCard,
   IonCardContent,
   IonCardHeader,
   IonCardSubtitle,
   IonCardTitle,
   IonContent,
-  IonHeader,
-  IonIcon,
-  IonTitle,
-  IonToolbar
+  IonButtons, // Añadido para el header
+  IonBackButton, // Añadido para el header
+  IonHeader,    // Añadido
+  IonToolbar,   // Añadido
+  AlertController, // <--- NECESARIO PARA BORRAR
+  ModalController, IonTitle  // <--- NECESARIO PARA EDITAR
 } from '@ionic/angular/standalone';
-import { FooterComponent } from '../footer/footer.component';
-import { ActivatedRoute, Router } from '@angular/router';
+import { RecetasService } from '../services/recetas.service';
+import { HistorialService } from '../services/historial.service';
+import { CarritoService } from '../services/carrito.service';
+import { Navigation } from '../services/navigation';
+import { Receta } from '../models/receta.model';
+import { CrearRecetaPage } from '../crear-receta/crear-receta.page'; // <--- IMPORTANTE
 
 @Component({
   selector: 'app-receta-detalle',
@@ -26,208 +29,142 @@ import { ActivatedRoute, Router } from '@angular/router';
   styleUrls: ['./receta-detalle.page.scss'],
   standalone: true,
   imports: [
-    IonContent,
-    IonHeader,
-    IonTitle,
-    IonToolbar,
     CommonModule,
-    FormsModule,
-    FooterComponent,
+    IonContent,
     IonCard,
     IonCardHeader,
     IonCardTitle,
     IonCardSubtitle,
     IonCardContent,
     IonButton,
-    IonButtons
+    IonButtons,
+    IonBackButton,
+    IonHeader,
+    IonToolbar,
+    IonTitle
   ]
 })
 export class RecetaDetallePage implements OnInit {
   private router = inject(Router);
   private route = inject(ActivatedRoute);
-  protected readonly navigate = navigate;
-  private nav = inject(Navigation);
+  private nav = inject(Navigation); // Asegúrate de que este servicio tenga navigateBack o usa router
+  private recetasService = inject(RecetasService);
+  private historialService = inject(HistorialService);
+  private carritoService = inject(CarritoService);
+  private alertCtrl = inject(AlertController); // <--- Inyectar Alert
+  private modalCtrl = inject(ModalController); // <--- Inyectar Modal
 
-  recetaActual: any;
+  recetaActual?: Receta;
+  cocinada = false;
+  agregadoAlCarrito = false;
+  cargando = true;
+  errorMensaje: string | null = null;
 
-  recetas = [
-    {
-      nombre: 'Albóndigas de carne',
-      dificultad: 'Baja',
-      tiempo: '30m',
-      imagen: 'assets/recetas/albondigas de carne.png',
-      ingredientes: [
-        '500 gramos de carne molida',
-        '2 huevos',
-        '1 cebolla',
-        '3 cucharadas soperas de pan rallado',
-        'Harina',
-        '1 pizca de orégano',
-        '1 pizca de ajo en polvo',
-        '1 cucharada sopera de perejil fresco',
-        'Sal (al gusto)'
-      ]
-    },
-    {
-      nombre: 'Alambre de puerco',
-      dificultad: 'Media',
-      tiempo: '25m',
-      imagen: 'assets/recetas/alambre de puerco.png',
-      ingredientes: [
-        '200 gramos de carne de puerco',
-        'Pimientos',
-        'Cebolla',
-        'Queso rallado',
-        'Aceite de oliva',
-        'Sal y pimienta'
-      ]
-    },
-    {
-      nombre: 'Adobito Sevillano',
-      dificultad: 'Baja',
-      tiempo: '30m',
-      imagen: 'assets/recetas/adobito sevillano.png',
-      ingredientes: [
-        '600 gramos de lomos de pescado sin espinas (preferiblemente cazón)',
-        '4 dientes de ajo',
-        '2 cucharadas soperas de orégano',
-        '1 cucharada sopera de comino molido',
-        '1 cucharada sopera de pimentón dulce',
-        '1 hoja de laurel',
-        '1 pizca de sal',
-        '200 mililitros de vinagre de vino blanco',
-        '200 mililitros de agua',
-        '5 cucharadas soperas de harina',
-        '300 mililitros de aceite de oliva para freír'
-      ]
-    },
-    {
-      nombre: 'Ceviche de corvina',
-      dificultad: 'Baja',
-      tiempo: '30m',
-      imagen: 'assets/recetas/ceviche de corvina.png',
-      ingredientes: [
-        '2 filetes de corvina',
-        '1 cebolla roja',
-        '½ cucharadita de ajo molido',
-        '1 ají limo',
-        '2 ramas de culantro',
-        '2 limones',
-        'Sal al gusto',
-        'Choclos',
-        'Camote',
-        'Lechuga',
-        'Cancha serrana chullpi c/n'
-      ]
-    },
-    {
-      nombre: 'Fabada Gallega',
-      dificultad: 'Baja',
-      tiempo: '1h 30m',
-      imagen: 'assets/recetas/fabada gallega.png',
-      ingredientes: [
-        '400 gramos de alubias blancas',
-        'Panceta salada',
-        '2 chorizos',
-        '1 cebolla',
-        '1 hoja de laurel',
-        '2 dientes de ajo',
-        'Sal'
-      ]
-    },
-    {
-      nombre: 'Galletas de avena',
-      dificultad: 'Baja',
-      tiempo: '45m',
-      imagen: 'assets/recetas/galletas de avena.png',
-      ingredientes: [
-        '1½ tazas de harina (210 gramos)',
-        '1¾ tazas de azúcar (350 gramos)',
-        '1 cucharadita de polvos de hornear',
-        '½ cucharadita de bicarbonato',
-        '1 cucharadita de sal',
-        '1 cucharadita de canela en polvo',
-        '3 tazas de hojuelas de avena',
-        '1 taza de cerezas cubiertas picadas',
-        '½ taza de nueces picadas',
-        '1 taza de mantequilla o margarina',
-        '2 huevos',
-        '½ taza de leche (120 mililitros)'
-      ]
-    },
-    {
-      nombre: 'Panqueques',
-      dificultad: 'Baja',
-      tiempo: '30m',
-      imagen: 'assets/recetas/panqueques.png',
-      ingredientes: [
-        '200 mililitros de leche vegetal',
-        '2 cucharadas soperas de aceite de girasol',
-        '2 cucharadas soperas de agua',
-        '1 cucharada postre de vainilla líquida',
-        '175 gramos de harina integral',
-        '1 cucharada sopera de levadura química (polvos de hornear)',
-        '1 cucharada sopera de panela molida',
-        '1 pizca de sal'
-      ]
-    },
-    {
-      nombre: 'Salchipapa',
-      dificultad: 'Baja',
-      tiempo: '45m',
-      imagen: 'assets/recetas/salchipapa.png',
-      ingredientes: [
-        '1 kilogramo de papas',
-        '6 unidades de salchichas rancheras',
-        '100 gramos de queso para derretir',
-        '1 vaso de leche',
-        '1 cucharada sopera de maicena',
-        'Aceite para freír',
-        'Sal al gusto',
-        'Mayonesa, mostaza, kétchup, salsa tártara, entre otras',
-        'Cebolla frita c/n'
-      ]
-    },
-    {
-      nombre: 'Tacos de alambre',
-      dificultad: 'Muy baja',
-      tiempo: '30m',
-      imagen: 'assets/recetas/tacos de alambre.png',
-      ingredientes: [
-        '500 gramos de carne de res sirloin o bistec',
-        '1 pimiento verde',
-        '1 pimiento rojo',
-        '1 pimiento amarillo',
-        '1 cebolla blanca mediana',
-        '200 gramos de queso manchego rallado',
-        '2 cucharadas soperas de aceite',
-        'Sal y pimienta al gusto',
-        'Tortillas de maíz o harina calientes'
-      ]
+  ngOnInit(): void {
+    const idParam = this.route.snapshot.paramMap.get('id');
+    if (!idParam) {
+      this.errorMensaje = 'ID de receta no válido';
+      this.cargando = false;
+      return;
     }
-    ];
-
-
-  ngOnInit() {
-    const titulo = this.route.snapshot.paramMap.get('id');
-    if (titulo) {
-      this.recetaActual = this.recetas.find(r => r.nombre === titulo);
-    }
+    const id = parseInt(idParam, 10);
+    this.cargarDatosReceta(id);
   }
 
-
-
-
-  navigateWithAnimation(route: string, $event: any) {
-    const icon = $event.target;
-    icon.classList.add('clicked');
-
-    setTimeout(() => {
-      icon.classList.remove('clicked');
-      this.router.navigate([route]);
+  // Función auxiliar para cargar (y recargar al editar)
+  private cargarDatosReceta(id: number) {
+    this.cargando = true;
+    this.recetasService.obtenerPorId(id).subscribe({
+      next: receta => {
+        this.recetaActual = receta;
+        this.errorMensaje = null;
+        this.cargando = false;
+      },
+      error: err => {
+        this.recetaActual = undefined;
+        this.errorMensaje = err.status === 404 ? 'Receta no encontrada' : 'Ocurrió un error al cargar la receta';
+        this.cargando = false;
+      }
     });
   }
+
+  marcarCocinada(): void {
+    if (!this.recetaActual || this.cocinada) return;
+
+    this.historialService.registrarComidaAPI(this.recetaActual.id).subscribe({
+      next: () => {
+        this.cocinada = true;
+        console.log(`Receta ${this.recetaActual!.id} registrada como cocinada.`);
+      },
+      error: (err) => console.error('Error al registrar cocinado en API:', err)
+    });
+  }
+
+  agregarAlCarrito(): void {
+    if (!this.recetaActual || this.agregadoAlCarrito) return;
+
+    this.carritoService.generarListaCompraAPI(this.recetaActual.id).subscribe({
+      next: () => {
+        this.agregadoAlCarrito = true;
+        console.log(`Lista de compra generada para receta ${this.recetaActual!.id}`);
+        setTimeout(() => {
+          this.router.navigate(['/carrito']);
+        }, 500);
+      },
+      error: (err) => console.error('Error al generar lista de compra en API:', err)
+    });
+  }
+
+  // --- LÓGICA DE BORRADO ---
+  async borrar() {
+    if (!this.recetaActual) return;
+
+    const alert = await this.alertCtrl.create({
+      header: '¿Borrar receta?',
+      message: 'Esta acción no se puede deshacer.',
+      buttons: [
+        { text: 'Cancelar', role: 'cancel' },
+        {
+          text: 'Borrar',
+          role: 'destructive',
+          handler: () => {
+            this.recetasService.borrarReceta(this.recetaActual!.id).subscribe({
+              next: () => {
+                console.log('🗑️ Receta borrada');
+                this.recetasService.recargarRecetas(); // Actualiza la lista home
+                this.router.navigate(['/home']); // Vuelve al inicio
+              },
+              error: (err) => console.error('Error al borrar', err)
+            });
+          }
+        }
+      ]
+    });
+    await alert.present();
+  }
+
+  // --- LÓGICA DE EDICIÓN ---
+  async editar() {
+    if (!this.recetaActual) return;
+
+    const modal = await this.modalCtrl.create({
+      component: CrearRecetaPage,
+      componentProps: {
+        recetaAEditar: this.recetaActual // Pasamos la receta actual al modal
+      }
+    });
+
+    modal.onDidDismiss().then((data) => {
+      // Si se editó correctamente ('creado' reutilizado para éxito)
+      if (data.role === 'creado') {
+        console.log('✏️ Receta editada, recargando vista...');
+        this.recetasService.recargarRecetas(); // Actualiza la home
+        this.cargarDatosReceta(this.recetaActual!.id); // Actualiza ESTA pantalla
+      }
+    });
+
+    await modal.present();
+  }
+
+  navigateWithAnimation(route: string, $event: Event): void {}
 }
-
-
-

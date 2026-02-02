@@ -1,61 +1,146 @@
-.anadir {
-padding: 20px;
-  width: 30%;
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 50vh;
+  text-align: center;
+  color: #888;
 
+  p {
+    font-size: 20px;
+    margin-bottom: 8px;
+  }
+
+  span {
+    font-size: 14px;
+    color: #aaa;
+  }
 }
 
 .grid-container {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  grid-template-columns: repeat(2, 1fr);
   gap: 16px;
   padding: 16px;
+  padding-bottom: 100px;
 }
 
-ion-card {
+.coleccion-card {
+  background: linear-gradient(145deg, #ffffff 0%, #f8f9fa 100%);
+  border-radius: 20px;
+  padding: 20px 16px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
   cursor: pointer;
-  transition: transform 0.2s, box-shadow 0.2s;
-  height: 150px; /* ajusta según quieras que sean cuadrados */
+  transition: all 0.2s ease;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  align-items: center;
+  min-height: 140px;
 
-  &:hover {
-    transform: scale(1.05);
-    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-  }
-
-  ion-card-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-
-    ion-button {
-      margin-left: 8px;
-      height: 24px;
-      font-size: 14px;
-    }
-  }
-
-  ion-card-content {
-    font-size: 14px;
-    color: #555;
+  &:active {
+    transform: scale(0.96);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   }
 }
 
-.agregar-coleccion {
+.card-icon {
+  font-size: 36px;
+  margin-bottom: 12px;
+}
+
+.card-content {
   display: flex;
-  align-items: center; /* centra verticalmente el texto con el botón */
-  gap: 8px; /* separación entre botón y texto */
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  width: 100%;
+}
 
-  .texto-boton {
-    font-size: 16px;
-    font-weight: 500;
-    color: #000; /* cambia al color que quieras */
-  }
+.card-title {
+  font-size: 15px;
+  font-weight: 600;
+  color: #333;
+  margin: 0;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 140px;
+}
 
-  ion-button.anadir {
-    --padding-start: 8px; /* opcional, ajusta para que no esté demasiado pegado al icono */
+.card-actions {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-edit {
+  background: none;
+  border: none;
+  font-size: 14px;
+  cursor: pointer;
+  padding: 4px;
+  opacity: 0.6;
+  transition: opacity 0.2s;
+
+  &:active {
+    opacity: 1;
+    transform: scale(1.2);
   }
 }
 
+.btn-delete {
+  background: none;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  padding: 4px;
+  color: #e53935;
+  opacity: 0.8;
+  transition: all 0.2s ease;
 
+  &:active {
+    opacity: 1;
+    transform: scale(1.15);
+  }
+}
+
+.input-edit {
+  --padding-start: 8px;
+  --padding-end: 8px;
+  font-size: 14px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  max-width: 120px;
+}
+
+.card-count {
+  font-size: 12px;
+  color: #888;
+  margin-top: 8px;
+}
+
+// FAB
+ion-fab {
+  margin-bottom: 70px;
+  margin-right: 8px;
+}
+
+ion-fab-button {
+  --background: linear-gradient(135deg, #ff6b6b 0%, #ff8e53 100%);
+  --box-shadow: 0 6px 20px rgba(255, 107, 107, 0.5);
+  width: 60px;
+  height: 60px;
+
+  &:active {
+    transform: scale(0.9);
+  }
+}
+
+.fab-icon {
+  font-size: 32px;
+  font-weight: 300;
+  color: #fff;
+}

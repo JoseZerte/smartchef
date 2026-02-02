@@ -1,11 +1,20 @@
-<ion-header [translucent]="true">
+
+<ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-button (click)="navigateWithAnimation('/home', $event)">
-        <img src="assets/icon/arrow-back-outline.svg" alt="Volver" height="20" width="20">
+      <ion-back-button defaultHref="/"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Detalle</ion-title>
+
+    <ion-buttons slot="end">
+      <ion-button (click)="editar()">
+        ✏️
+      </ion-button>
+      <ion-button color="danger" (click)="borrar()">
+        🗑️
       </ion-button>
     </ion-buttons>
-    <ion-title>Detalles de la Receta</ion-title>
+
   </ion-toolbar>
 </ion-header>
 
@@ -13,36 +22,49 @@
 
 
 
+
+
+
+
 <ion-content>
-  <ion-card class="card" *ngIf="recetaActual">
-    <img [alt]="recetaActual.nombre" [src]="recetaActual.imagen" />
+  <ng-container *ngIf="recetaActual">
+    <ion-card class="card">
+      <img [alt]="recetaActual.titulo" [src]="recetaActual.imagen" />
 
-    <ion-card-header class="cardheader">
-      <ion-card-title class="cardtitle">{{ recetaActual.nombre }}</ion-card-title>
-      <ion-card-subtitle class="cardsub">Dificultad: {{ recetaActual.dificultad }}</ion-card-subtitle>
-      <ion-card-subtitle class="cardsub">Tiempo de preparación: {{ recetaActual.tiempo }}</ion-card-subtitle>
-    </ion-card-header>
+      <ion-card-header class="cardheader">
+        <ion-card-title class="cardtitle">{{ recetaActual.titulo }}</ion-card-title>
+        <ion-card-subtitle class="cardsub">Dificultad: {{ recetaActual.dificultad }}</ion-card-subtitle>
+        <ion-card-subtitle class="cardsub">Tiempo de preparación: {{ recetaActual.tiempoPreparacion }}</ion-card-subtitle>
+      </ion-card-header>
 
-    <ion-card-content class="cardcontent">
-      <strong>Ingredientes:</strong>
-      <ul>
-        <li *ngFor="let ingrediente of recetaActual.ingredientes">
-          {{ ingrediente }}
-        </li>
-      </ul>
-    </ion-card-content>
-  </ion-card>
+      <ion-card-content class="cardcontent">
+        <strong>Ingredientes:</strong>
+        <ul>
+          <li *ngFor="let ing of recetaActual.ingredientes">
+            {{ ing.cantidad }} {{ ing.unidad }} {{ ing.nombre }}
+          </li>
+        </ul>
 
+        <div *ngIf="!recetaActual.ingredientes || recetaActual.ingredientes.length === 0" style="color: red; font-style: italic; margin-top: 10px;">
+          ⚠️ No hay ingredientes registrados para esta receta.
+        </div>
+      </ion-card-content>
+    </ion-card>
 
-  <ion-button>Añadir ingredientes a la cesta</ion-button>
+    <div class="acciones">
+      <ion-button
+        [color]="agregadoAlCarrito ? 'success' : 'primary'"
+        (click)="agregarAlCarrito()"
+        [disabled]="agregadoAlCarrito">
+        {{ agregadoAlCarrito ? '✓ ¡Añadido al carrito!' : '🛒 Añadir ingredientes a la cesta' }}
+      </ion-button>
 
-
+      <ion-button
+        [color]="cocinada ? 'success' : 'primary'"
+        (click)="marcarCocinada()"
+        [disabled]="cocinada">
+        {{ cocinada ? '✓ ¡Cocinada hoy!' : '🍳 Marcar como cocinada' }}
+      </ion-button>
+    </div>
+  </ng-container>
 </ion-content>
-
-
-
-
-
-
-
-<app-footer></app-footer>

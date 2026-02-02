@@ -1,0 +1,45 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>🛒 Lista de Compras</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  @if (items.length === 0) {
+    <div class="empty-state">
+      <p>🛒 Tu lista está vacía</p>
+      <span>Añade ingredientes desde las recetas</span>
+    </div>
+  } @else {
+    <ion-list>
+      @for (item of items; track $index; let i = $index) {
+        <ion-item-sliding>
+          <ion-item [class.comprado]="item.comprado" (click)="toggleComprado(i)">
+            <ion-checkbox
+              slot="start"
+              [checked]="item.comprado"
+              (ionChange)="toggleComprado(i)">
+            </ion-checkbox>
+            <ion-label>
+              <h2 [class.tachado]="item.comprado">{{ item.ingrediente }}</h2>
+              <p>{{ item.recetaNombre }}</p>
+            </ion-label>
+          </ion-item>
+          <ion-item-options side="end">
+            <ion-item-option color="danger" (click)="eliminar(i)">
+              Eliminar
+            </ion-item-option>
+          </ion-item-options>
+        </ion-item-sliding>
+      }
+    </ion-list>
+
+    @if (hayComprados) {
+      <div class="acciones">
+        <ion-button expand="block" color="medium" (click)="limpiarComprados()">
+          🗑️ Limpiar comprados
+        </ion-button>
+      </div>
+    }
+  }
+</ion-content>
