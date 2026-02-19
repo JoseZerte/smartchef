@@ -10,7 +10,7 @@ import { RecetaFavorita } from '../models/receta.model';
 })
 export class FavoritosService {
   private http = inject(HttpClient);
-  private readonly baseUrl = 'http://localhost:8080/recetas';
+  private readonly baseUrl = 'http://192.168.0.193:8080/recetas';
 
   private favoritos: RecetaFavorita[] = [];
   public favoritos$ = new BehaviorSubject<RecetaFavorita[]>([]);
@@ -24,7 +24,7 @@ export class FavoritosService {
 
 
   obtenerFavoritosAPI(): Observable<RecetaFavorita[]> {
-    const url = `http://localhost:8080/usuarios/favoritos`;
+    const url = `http://192.168.0.193:8080/usuarios/favoritos`;
     return this.http.get<RecetaFavorita[]>(url).pipe(
       tap((data: RecetaFavorita[]) => {
         this.favoritos = data;

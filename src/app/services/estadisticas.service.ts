@@ -10,7 +10,7 @@ import { EstadisticaIngredienteDTO, EstadisticaUsuarioDTO } from '../models/api.
 })
 export class EstadisticasService {
   private http = inject(HttpClient);
-  private readonly baseUrl = 'http://localhost:8080/estadisticas';
+  private readonly baseUrl = 'http://192.168.0.193:8080/estadisticas';
 
 
   obtenerTopIngredientes(): Observable<EstadisticaIngredienteDTO[]> {

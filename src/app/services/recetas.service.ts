@@ -14,7 +14,7 @@ import { map } from 'rxjs/operators';
 export class RecetasService {
 
   private http = inject(HttpClient);
-  private readonly baseUrl = 'http://localhost:8080/recetas';
+  private readonly baseUrl = 'http://192.168.0.193:8080/recetas';
 
 
   private filtrosActivos = new BehaviorSubject<string[]>([]);

@@ -19,7 +19,7 @@ export interface RecetaCocinada {
 })
 export class HistorialService {
   private http = inject(HttpClient);
-  private readonly baseUrl = 'http://localhost:8080/historial-cocina';
+  private readonly baseUrl = 'http://192.168.0.193:8080/historial-cocina';
 
   private historial = new BehaviorSubject<RecetaCocinada[]>(this.cargarHistorial());
   historial$ = this.historial.asObservable();

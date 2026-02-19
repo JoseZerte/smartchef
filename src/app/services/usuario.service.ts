@@ -12,7 +12,7 @@ import { UsuarioRegistroDTO, AuthResponse, Usuario, LoginDTO, Preferencia } from
 export class UsuarioService {
   private http = inject(HttpClient);
   private router = inject(Router);
-  private readonly baseUrl = 'http://localhost:8080';
+  private readonly baseUrl = 'http://192.168.0.193:8080';
 
   private usuarioActual = new BehaviorSubject<Usuario | null>(this.cargarUsuarioDesdeStorage());
   usuarioActual$ = this.usuarioActual.asObservable();

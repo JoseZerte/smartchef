@@ -1,24 +1,70 @@
 <ion-header [translucent]="true">
-
-<app-header></app-header>
-
+  <app-header></app-header>
 </ion-header>
 
-<ion-content><app-contenido-pp></app-contenido-pp>
+<ion-content>
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content
+      pullingIcon="chevron-down-circle-outline"
+      pullingText="Desliza para recargar"
+      refreshingSpinner="circles"
+      refreshingText="Cargando recetas...">
+    </ion-refresher-content>
+  </ion-refresher>
 
-
+  <app-contenido-pp></app-contenido-pp>
 
   <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-    <ion-fab-button (click)="abrirCrearReceta()">
-      ➕
+    <ion-fab-button (click)="abrirCamara()">
+      <ion-icon name="camera"></ion-icon>
     </ion-fab-button>
   </ion-fab>
+
+  <ion-modal [isOpen]="isModalOpen" (didDismiss)="cancelar()">
+    <ng-template>
+      <ion-header>
+        <ion-toolbar color="primary">
+          <ion-title>Nueva Receta</ion-title>
+          <ion-buttons slot="end">
+            <ion-button (click)="cancelar()">
+              <ion-icon name="close"></ion-icon>
+            </ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+      </ion-header>
+
+      <ion-content class="ion-padding">
+        <div *ngIf="capturedImage" class="ion-text-center" style="margin-bottom: 20px;">
+          <p class="ion-text-muted">Foto capturada:</p>
+          <ion-img
+            [src]="capturedImage"
+            style="border-radius: 10px; height: 300px; object-fit: contain; border: 1px solid #ccc;">
+          </ion-img>
+        </div>
+
+        <ion-item lines="full" style="margin-top: 20px;">
+          <ion-label position="stacked">Título de la receta <span style="color:red">*</span></ion-label>
+          <ion-input
+            [(ngModel)]="nuevaReceta.titulo"
+            placeholder="Ej: Macarrones con tomate"
+            type="text">
+          </ion-input>
+        </ion-item>
+
+        <p class="ion-text-center ion-text-muted">
+          <small>La imagen se guardará en tu base de datos MariaDB.</small>
+        </p>
+      </ion-content>
+
+      <ion-footer>
+        <ion-toolbar>
+          <ion-button expand="full" (click)="guardarEnBD()" [disabled]="!nuevaReceta.titulo">
+            <ion-icon slot="start" name="checkmark"></ion-icon>
+            Guardar y Subir
+          </ion-button>
+        </ion-toolbar>
+      </ion-footer>
+    </ng-template>
+  </ion-modal>
+
 </ion-content>
-
-
-
-
-
-
-
-

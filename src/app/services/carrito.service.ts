@@ -16,7 +16,7 @@ export interface ItemCarrito {
 })
 export class CarritoService {
   private http = inject(HttpClient);
-  private readonly baseUrl = 'http://localhost:8080/listas-compra';
+  private readonly baseUrl = 'http://192.168.0.193:8080/listas-compra';
 
   private items = new BehaviorSubject<ItemCarrito[]>(this.cargar());
   items$ = this.items.asObservable();
